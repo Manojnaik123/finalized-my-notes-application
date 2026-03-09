@@ -8,7 +8,7 @@ export interface NoNoteProps {
 }
 
 export interface NoteCardProps {
-    children: React.ReactNode,
+    children?: React.ReactNode,
     note: Note,
     isActive: boolean,
     onNoteClick: (noteId: number) => void
