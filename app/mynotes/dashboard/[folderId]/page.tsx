@@ -18,7 +18,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Heart, NotebookPen } from "lucide-react";
+import { Heart, NotebookPen, Plus } from "lucide-react";
 import { useState } from "react";
 
 export default function Page() {
@@ -30,7 +30,27 @@ export default function Page() {
   }
 
   return (
-    // <div className="w-full flex-1 flex flex-col min-h-0">
+    <>
+      <div className="flex flex-col items-center justify-center h-full text-center gap-3">
+        <NotebookPen className="w-10 h-10 text-muted-foreground" />
+        <h2 className="text-lg font-medium">No note selected</h2>
+        <p className="text-sm text-muted-foreground max-w-xs">
+          Pick a note from the list or create a new one to get started.
+        </p>
+        <button
+          // onClick={handleCreateNote}
+          className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm mt-2"
+        >
+          <Plus className="w-4 h-4" />
+          New Note
+        </button>
+      </div>
+    </>
+  )
+}
+
+
+ // <div className="w-full flex-1 flex flex-col min-h-0">
     //   <div className="flex flex-1 min-h-0">
     //     {!selectedNoteId && (
     //       <div className="w-full md:max-w-sm 2xl:w-1/4  border-r overflow-y-auto scrollbar-custom">
@@ -47,14 +67,3 @@ export default function Page() {
     //   </div>
     //   <Footer />
     // </div>
-    <>
-      <div className="flex flex-col items-center justify-center h-full text-center gap-3">
-        <NotebookPen className="w-10 h-10 text-muted-foreground" />
-        <h2 className="text-lg font-medium">No note selected</h2>
-        <p className="text-sm text-muted-foreground max-w-xs">
-          Pick a note from the list to start reading, or create a new one.
-        </p>
-      </div>
-    </>
-  )
-}

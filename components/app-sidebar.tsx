@@ -12,46 +12,49 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarMenu,
 } from "@/components/ui/sidebar"
-import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, FrameIcon, PieChartIcon, MapIcon } from "lucide-react"
+import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, FrameIcon, PieChartIcon, MapIcon, Settings2, Settings, SettingsIcon } from "lucide-react"
 
 
 const user = {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  }
+  name: "shadcn",
+  email: "m@example.com",
+  avatar: "/avatars/shadcn.jpg",
+}
 
 const teams = [
-    {
-      name: "Acme Inc",
-      logo: (
-        <GalleryVerticalEndIcon
-        />
-      ),
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: (
-        <AudioLinesIcon
-        />
-      ),
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: (
-        <TerminalIcon
-        />
-      ),
-      plan: "Free",
-    },
-  ];
+  {
+    name: "Acme Inc",
+    logo: (
+      <GalleryVerticalEndIcon
+      />
+    ),
+    plan: "Enterprise",
+  },
+  {
+    name: "Acme Corp.",
+    logo: (
+      <AudioLinesIcon
+      />
+    ),
+    plan: "Startup",
+  },
+  {
+    name: "Evil Corp.",
+    logo: (
+      <TerminalIcon
+      />
+    ),
+    plan: "Free",
+  },
+];
 
 // This is sample data.
 const data = {
-  
+
   navMain: [
     {
       title: "Playground",
@@ -186,9 +189,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavFolders/>
+        <NavFolders />
         <NavFavourites />
       </SidebarContent>
+      <SidebarMenu className="mt-auto px-2">
+        <SidebarMenuItem>
+          <SidebarMenuButton>
+            <SettingsIcon />
+            Settings
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
       <SidebarFooter>
         <NavUser user={user} />
       </SidebarFooter>

@@ -14,10 +14,6 @@ const NotePage = () => {
 
     const { noteId } = useParams();
     const note = getNotes(8).find((note) => note.id === Number(noteId));
-    console.log(note);
-    
-
-    if(!note) return <p>Noting to show</p>
 
     return (
         <div className="flex flex-col h-auto min-h-full mx-auto">

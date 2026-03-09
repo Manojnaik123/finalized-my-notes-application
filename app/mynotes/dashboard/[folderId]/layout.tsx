@@ -50,17 +50,17 @@ export default function DashboardLayout({
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  {/* <BreadcrumbLink>
-                    {curFolderName}
-                  </BreadcrumbLink> */}
                   <BreadcrumbPage>
                     {curFolderName}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
+                <BreadcrumbLink className="flex md:hidden">
+                  [Work space name]
+                </BreadcrumbLink>
                 {curNoteName && (
                   <>
                     <BreadcrumbSeparator className="hidden md:block" />
-                    <BreadcrumbItem>
+                    <BreadcrumbItem className="hidden md:block">
                       <BreadcrumbPage>
                         {curNoteName}
                       </BreadcrumbPage>

@@ -1,3 +1,4 @@
+import { Library } from "@/types/main-types/library";
 import { Note } from "@/types/main-types/note";
 
 
@@ -167,4 +168,27 @@ export function getNotes(length?: number): Note[] {
   if (!length) return notes;
   return notes.slice(0, Math.min(length, notes.length));
 }
+
+export const libraries: Library[] = [
+  {
+    id: 1,
+    title: 'Job Related',
+    description: 'Notes related to my job and work tasks.'
+  },
+  {
+    id: 2,
+    title: 'Personal',
+    description: 'Personal notes, thoughts and daily reflections.'
+  },
+  {
+    id: 3,
+    title: 'Learning',
+    description: 'Study notes, courses and topics I am exploring.'
+  },
+  {
+    id: 4,
+    title: 'Projects',
+    description: 'Notes and ideas for side projects I am working on.'
+  }
+]
 

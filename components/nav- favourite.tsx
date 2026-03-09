@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Favourites, favourites, getNotes } from "@/delete-later/data"
 import { MoreHorizontalIcon, FolderIcon, ArrowRightIcon, Trash2Icon } from "lucide-react"
+import Link from "next/link"
 
 export function NavFavourites() {
   const { isMobile } = useSidebar()
@@ -33,10 +34,10 @@ export function NavFavourites() {
         {favNotes.map((note) => (
           <SidebarMenuItem key={note.title}>
             <SidebarMenuButton asChild>
-              <a > {/* href={item.url} */}
+              <Link href={`/mynotes/dashboard/${note.folderId}/${note.id}`}> {/* href={item.url} */}
                 {/* {item.icon} */}
                 <span>{note.title}</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
