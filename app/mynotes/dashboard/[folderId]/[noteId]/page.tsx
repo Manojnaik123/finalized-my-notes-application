@@ -53,7 +53,7 @@ const NotePage = () => {
                 </div>
             </div>
             <div className="flex flex-1 prose prose-invert max-w-none pt-4">
-                <Tiptap content={note?.content} />
+                <Tiptap content={note?.content ?? ''} />
             </div>
         </div>
     )
