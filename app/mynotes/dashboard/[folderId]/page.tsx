@@ -1,0 +1,60 @@
+"use client";
+
+import { AppSidebar } from "@/components/app-sidebar"
+import Footer from "@/components/app/dashboard/footer";
+import FolderContentView from "@/components/app/folder-view/folder-content-view";
+import NoteView from "@/components/app/folder-view/note-view";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { Heart, NotebookPen } from "lucide-react";
+import { useState } from "react";
+
+export default function Page() {
+
+  const [selectedNoteId, setselectedNoteId] = useState<number>(0);
+
+  function handleNoteSelected(noteId: number) {
+    setselectedNoteId(noteId);
+  }
+
+  return (
+    // <div className="w-full flex-1 flex flex-col min-h-0">
+    //   <div className="flex flex-1 min-h-0">
+    //     {!selectedNoteId && (
+    //       <div className="w-full md:max-w-sm 2xl:w-1/4  border-r overflow-y-auto scrollbar-custom">
+    //         <FolderContentView onNoteClick={handleNoteSelected} />
+    //       </div>
+    //     )}
+    //     {(selectedNoteId !== 0) ? (
+    //       <div className="flex-1 2xl:w-3/4 px-8 py-6 overflow-y-auto scrollbar-custom">
+    //         <NoteView noteId={selectedNoteId} />
+    //       </div>) : (
+    //         <p>Nothing selected</p>
+    //       )
+    //     }
+    //   </div>
+    //   <Footer />
+    // </div>
+    <>
+      <div className="flex flex-col items-center justify-center h-full text-center gap-3">
+        <NotebookPen className="w-10 h-10 text-muted-foreground" />
+        <h2 className="text-lg font-medium">No note selected</h2>
+        <p className="text-sm text-muted-foreground max-w-xs">
+          Pick a note from the list to start reading, or create a new one.
+        </p>
+      </div>
+    </>
+  )
+}
