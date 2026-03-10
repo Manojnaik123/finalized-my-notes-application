@@ -27,10 +27,6 @@ export const libraryColors: Color[] = [
         id: 7,
         code: '#ffc6ff'
     },
-    // {
-    //     id: 8,
-    //     code: '#a0c4ff'
-    // },
     {
         id: 2,
         code: '#bdb2ff'
@@ -83,3 +79,9 @@ export const folderIcons: Icon[] = [
         icon: Trophy
     },
 ]
+
+
+
+
+
+
