@@ -18,6 +18,7 @@ export interface ToolTipProps {
     children: React.ReactNode,
     text: string,
     direction: 'right'|'left'|'top'|'bottom';
+    className: string,
     isVisible: boolean,
 }
 

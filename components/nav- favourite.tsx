@@ -29,7 +29,7 @@ export function NavFavourites() {
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Favourite notes</SidebarGroupLabel>
+      <SidebarGroupLabel>Favourite notes /*this needs attention*/</SidebarGroupLabel>
       <SidebarMenu>
         {favNotes.map((note) => (
           <SidebarMenuItem key={note.title}>
@@ -54,7 +54,7 @@ export function NavFavourites() {
                 className="w-48 rounded-lg"
                 side={isMobile ? "bottom" : "right"}
                 align={isMobile ? "end" : "start"}
-              >
+                >
                 <DropdownMenuItem>
                   <FolderIcon className="text-muted-foreground" />
                   <span>View Project</span>

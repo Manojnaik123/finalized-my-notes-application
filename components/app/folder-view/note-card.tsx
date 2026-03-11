@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import { truncate } from '@/lib/text-formaters/text-formaters';
+import { truncateString } from '@/lib/text-formaters/text-formaters';
 import { NoteCardProps } from '@/types/props-types/notes-view';
 
 import React from 'react'
@@ -32,14 +32,14 @@ const NoteCard = ({
             <div className={`${isActive ? 'border-l-3 border-foreground/50' : 'border-l-3 border-transparent'}`} />
             <div className='p-4 flex flex-col gap-2'>
                 <div className=' flex justify-between'>
-                    <Tooltip isVisible={true} text='Header if length exceeds' direction='top'>
+                    <Tooltip isVisible={true} text='Header if length exceeds' direction='top' className=''>
                         <h1 className='text-base text-foreground pb-2'>{note.title}</h1>
                     </Tooltip>
                     <div className='flex items-center justify-center gap-1'>
-                        <Tooltip isVisible={true} text='this note is sharable' direction='right'>
+                        <Tooltip isVisible={true} text='this note is sharable' direction='right' className=''>
                             <Users className='h-4 fill-foreground/50' />
                         </Tooltip>
-                        <Tooltip isVisible={true} text='Pin to top' direction='right'>
+                        <Tooltip isVisible={true} text='Pin to top' direction='right' className=''>
                             <Pin className='h-4  fill-sidebar-foreground/50' />
                         </Tooltip>
                     </div>
@@ -56,7 +56,7 @@ const NoteCard = ({
                     </Badge>
                 </div>
                 <p className='text-sm text-foreground/50'>
-                    {truncate(note.content, 150)}
+                    {truncateString(note.content, 150)}
                 </p>
                 <div className='flex justify-between pt-1'>
                     <span className='text-xs text-muted-foreground/30'>

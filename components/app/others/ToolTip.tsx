@@ -6,9 +6,9 @@ import {
 } from "@/components/ui/tooltip"
 import { ToolTipProps } from "@/types/props-types/notes-view"
 
-export function Tooltip({ children, isVisible, text, direction }: ToolTipProps) {
+export function Tooltip({ children, isVisible, text, direction, className }: ToolTipProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 ">
       <ToolTip>
         <TooltipTrigger asChild>
           <div>

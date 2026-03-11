@@ -1,5 +1,5 @@
-export interface AddLibraryDialogProps {
-    open: boolean,
+export interface DeleteLibraryDialogProps {
     libraryId: number,
+    open: boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }

@@ -20,6 +20,7 @@ import { SunMoon } from 'lucide-react'
 import { useParams } from "next/navigation";
 import { folders, getNotes } from "@/delete-later/data";
 import FolderSidebar from "@/components/app/folder-view/folder-sidebar";
+import { useLibraries } from "@/hooks/use-libraries";
 
 export default function DashboardLayout({
   children,
@@ -28,9 +29,11 @@ export default function DashboardLayout({
 }) {
   const { toggleTheme } = useTheme();
 
-  const { folderId, noteId } = useParams();
+  const { folderId, noteId, libraryId } = useParams();
 
   const numericNoteId = Number(noteId);
+
+  const { data: libraries, isLoading, isError } = useLibraries();
 
   const curFolderName = folders.find((folder) => folder.id === Number(folderId))?.title;
 
