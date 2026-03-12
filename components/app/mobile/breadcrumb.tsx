@@ -11,6 +11,7 @@ import { FOLDERS_KEY, NOTES_KEY } from "@/lib/query-keys/query-keyx";
 import { Note } from "@/types/main-types/note";
 import { Folder } from "@/types/props-types/folder.";
 import { useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 import { useParams } from "next/navigation"
 
 export function BreadcrumbMobile() {
@@ -24,16 +25,11 @@ export function BreadcrumbMobile() {
   const curFolder = queryClient.getQueryData<Folder[]>([FOLDERS_KEY])?.find((folder) => folder.id === numericFolderId)
   const curNote = queryClient.getQueryData<Note[]>([NOTES_KEY, numericFolderId])?.find((note) => note.id === numericNoteId)
 
-
-  console.log('from breadcrum')
-  console.log(curNote);
-
   return (
     <Breadcrumb className="">
       <BreadcrumbList>
-        
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/mynotes/dashboard/${libraryId}/${folderId}`}>{curFolder?.folder_name}</BreadcrumbLink>
+          <Link href={`/mynotes/dashboard/${libraryId}/${folderId}`}>{curFolder?.folder_name}</Link>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
@@ -43,9 +39,3 @@ export function BreadcrumbMobile() {
     </Breadcrumb>
   )
 }
-
-
-// <BreadcrumbItem>
-//           <BreadcrumbLink href="#">Base folder</BreadcrumbLink>
-//         </BreadcrumbItem>
-//         <BreadcrumbSeparator />

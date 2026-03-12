@@ -108,12 +108,12 @@ export function TeamSwitcher({
       <AddLibraryDialog libraryId={selectedLibraryId} open={addLibraryDialogOpen} setOpen={setAddLibraryDialogOpen} />
       <SidebarMenu>
         <SidebarMenuItem>
-          <DropdownMenu>
+          <DropdownMenu >
             <DropdownMenuTrigger asChild>
               {curLibrary ? (
                 <SidebarMenuButton
                   size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                  className=" data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                     {activeTeam.logo}
@@ -142,12 +142,12 @@ export function TeamSwitcher({
                 </>
               )}
             </DropdownMenuTrigger>
-            <DropdownMenuContent className={`w-72 ${isDark ? 'dark': ''} `} align="start" side="bottom" sideOffset={4}>
+            <DropdownMenuContent className={`w-72 ${isDark ? 'dark' : ''} `} align="start" side="bottom" sideOffset={4}>
               <DropdownMenuGroup>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                {/* -------------------- */}
+
                 {sortedLibraries && sortedLibraries.map((library) => (
-                  <DropdownMenuSub>
+                  <DropdownMenuSub >
                     <DropdownMenuSubTrigger className="
                               hover:bg-foreground/5!
                               hover:text-foreground!
@@ -186,13 +186,16 @@ export function TeamSwitcher({
                       </div>
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
-                      <DropdownMenuSubContent className={`${isDark && 'dark'}`}>
+                      <DropdownMenuSubContent className={`${isDark && 'dark'}`}
+                        sideOffset={isMobile? -100 : 0}  // negative offset pulls it down below the trigger
+                        alignOffset={isMobile? 25 : 10}
+                        avoidCollisions={false}>
                         <DropdownMenuItem onClick={() => handleLibrarySwitchClick(library.id)} className="hover:bg-foreground/5! hover:text-foreground! data-highlighted:bg-foreground/5! data-highlighted:text-foreground!">
                           <RefreshCcw />
                           Switch Library
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleDefaultset(library.id)} className="hover:bg-foreground/5! hover:text-foreground! data-highlighted:bg-foreground/5! data-highlighted:text-foreground!">
-                          <Star className="fill-yellow-400 text-yellow-400"/>
+                          <Star className="fill-yellow-400 text-yellow-400" />
                           Set as Default
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleAddEditLibraryClick(library.id)} className="hover:bg-foreground/5! hover:text-foreground! data-highlighted:bg-foreground/5! data-highlighted:text-foreground!">
@@ -208,7 +211,7 @@ export function TeamSwitcher({
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
                 ))}
-                {/* -------------------- */}
+
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
@@ -224,10 +227,3 @@ export function TeamSwitcher({
     </>
   )
 }
-
-
-{/* <DropdownMenuGroup>
-                <DropdownMenuItem>GitHub</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuItem disabled>API</DropdownMenuItem>
-              </DropdownMenuGroup> */}

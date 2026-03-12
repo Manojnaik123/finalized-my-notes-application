@@ -126,7 +126,7 @@ export function AddLibraryDialog({ open, setOpen, libraryId }: AddLibraryDialogP
                         </Field>
                         <Field className="">
                             <FieldLabel htmlFor="textarea-message">Color <span className="text-card-foreground/50">(optional)</span></FieldLabel>
-                            <div className="flex gap-3">
+                            <div className="flex flex-wrap gap-3">
                                 {libraryColors.map((color, index) => (
                                     <Button
                                         type="button"
