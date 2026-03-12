@@ -24,7 +24,7 @@ export function BreadcrumbMobile() {
         </BreadcrumbItem>
         <BreadcrumbSeparator /> */}
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/mynotes/dashboard/${libraryId}/${curFolder?.id}`}>{curFolder?.title}</BreadcrumbLink>
+          <BreadcrumbLink href={`/mynotes/dashboard/${libraryId}/${folderId}`}>{curFolder?.title}</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
