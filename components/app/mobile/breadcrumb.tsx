@@ -27,16 +27,11 @@ export function BreadcrumbMobile() {
 
   console.log('from breadcrum')
   console.log(curNote);
-  
-  
 
   return (
     <Breadcrumb className="">
       <BreadcrumbList>
-        {/* <BreadcrumbItem>
-          <BreadcrumbLink href="#">Base folder</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator /> */}
+        
         <BreadcrumbItem>
           <BreadcrumbLink href={`/mynotes/dashboard/${libraryId}/${folderId}`}>{curFolder?.folder_name}</BreadcrumbLink>
         </BreadcrumbItem>
@@ -48,3 +43,9 @@ export function BreadcrumbMobile() {
     </Breadcrumb>
   )
 }
+
+
+// <BreadcrumbItem>
+//           <BreadcrumbLink href="#">Base folder</BreadcrumbLink>
+//         </BreadcrumbItem>
+//         <BreadcrumbSeparator />
