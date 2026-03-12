@@ -3,7 +3,7 @@
 const DashboardPage = () => {
   
   return (
-    <div>library page</div>
+    <div>Welcome message here</div>
   )
 }
 

@@ -15,6 +15,7 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useTheme } from "@/context/theme-context"
 import { useSaveLibrary } from "@/hooks/use-add-library"
 import { useLibraries } from "@/hooks/use-libraries"
 import { libraryColors } from "@/lib/color-and-icon/colors-and-icons"
@@ -38,6 +39,8 @@ export function AddLibraryDialog({ open, setOpen, libraryId }: AddLibraryDialogP
 
     const { data: libraries } = useLibraries()
 
+    const { isDark } = useTheme()
+
     useEffect(() => {
         setError('');
         if (libraryId && libraryId > 0 && libraries) {
@@ -52,7 +55,7 @@ export function AddLibraryDialog({ open, setOpen, libraryId }: AddLibraryDialogP
                 return;
             }
         }
-        setFormData(defaultForm);
+        setFormData(defaultForm)
     }, [open, libraries])
 
     function handleChange(field: keyof typeof defaultForm, value: string | number) {
@@ -72,21 +75,25 @@ export function AddLibraryDialog({ open, setOpen, libraryId }: AddLibraryDialogP
             return;
         }
         addLibrary(form, {
+            onSuccess: () => {
+                setOpen(false)
+            },
             onError: (err) => {
                 toast.error(err.message, { position: "top-center" });
             }
-        });
-        setOpen(false);
+        })
     }
 
     return (
         <Dialog open={open} onOpenChange={setOpen} >
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className={`sm:max-w-md ${isDark && 'dark'} text-foreground`}>
                 <form className="" onSubmit={handleSubmit}>
                     <DialogHeader className="flex flex-col">
                         <div className="flex items-center gap-2">
-                            <SquareLibrary />
-                            <DialogTitle>New Library</DialogTitle>
+                            <SquareLibrary className="text-foreground"/>
+                            <DialogTitle className="text-foreground">
+                                {form?.id || 0 > 0 ? "Edit":"New"} Library
+                                </DialogTitle>
                         </div>
                         <div>
                             <DialogDescription className="text-sm">
@@ -94,7 +101,7 @@ export function AddLibraryDialog({ open, setOpen, libraryId }: AddLibraryDialogP
                             </DialogDescription>
                         </div>
                     </DialogHeader>
-                    <FieldGroup className="py-4">
+                    <FieldGroup className="py-4 text-foreground">
                         <Field>
                             <Label htmlFor="name-1">Name</Label>
                             <Input

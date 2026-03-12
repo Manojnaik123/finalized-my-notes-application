@@ -14,18 +14,13 @@ const saveLibrary = async (body: Partial<Library>): Promise<Library> => {
     body: JSON.stringify(body),
   });
 
-  const result = (await res.json()) as ApiResponse<Library>
+  const result = (await res.json()) as ApiResponse<Library>;
 
   if (!res.ok || result.error) {
     throw new Error(result.error || `${method} request failed`);
   }
 
-  const { data, error } = (await res.json()) as ApiResponse<Library>;
-  if (error) {
-    throw new Error(error)
-  }
-
-  return data!;
+  return result.data!;
 };
 
 export const useSaveLibrary = () => {

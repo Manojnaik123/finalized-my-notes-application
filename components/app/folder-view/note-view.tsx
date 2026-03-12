@@ -13,19 +13,24 @@ const NoteView = ({ noteId }: { noteId: number }) => {
   const note = getNotes(4).find((note) => note.id === noteId);
 
   console.log(note);
-  
 
-  if(!note) return;
+
+  if (!note) return;
 
   return (
     <div className="flex flex-col h-auto min-h-full mx-auto">
-      <BreadcrumbMobile/>
+
+      <BreadcrumbMobile />
       <div className="py-6 border-b flex flex-col gap-3">
+        <div className='w-100 h-14 border-b'>
+          hello
+        </div>
         <div className='flex flex-col md:flex-row justify-between items-center text-foreground'>
           <div className='md:w-full'>
+            hehehehe
             <input className='text-2xl md:text-3xl font-semibold focus:outline-0' value={note?.title} />
           </div>
-          <div>
+          {/* <div>
             <Button variant={'ghost'}>
               <Pin className='text-foreground/70' />
             </Button>
@@ -35,7 +40,7 @@ const NoteView = ({ noteId }: { noteId: number }) => {
             <Button variant={'ghost'} className='text-destructive'>
               <Trash />
             </Button>
-          </div>
+          </div> */}
         </div>
         <div className='text-foreground/50 flex flex-col md:flex-row gap-8'>
           <div className='flex gap-2 text-xs'>
@@ -55,7 +60,7 @@ const NoteView = ({ noteId }: { noteId: number }) => {
         </div>
       </div>
       <div className="flex flex-1 prose prose-invert max-w-none pt-4">
-        <TrialEditor content={note?.content}/>
+        <TrialEditor content={note?.content} />
       </div>
     </div>
   )

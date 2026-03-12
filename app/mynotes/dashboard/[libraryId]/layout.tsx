@@ -20,7 +20,8 @@ import { SunMoon } from 'lucide-react'
 import { useParams } from "next/navigation";
 import { folders, getNotes } from "@/delete-later/data";
 import FolderSidebar from "@/components/app/folder-view/folder-sidebar";
-import { useLibraries } from "@/hooks/use-libraries";
+import { useLibraries } from "@/hooks/use-libraries"
+import { MiddeSideBarProvider } from "@/context/middle-sidebar-context"
 
 export default function DashboardLayout({
   children,
@@ -40,49 +41,51 @@ export default function DashboardLayout({
   const curNoteName = getNotes().find((note) => note.id === numericNoteId)?.title;
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset className="h-screen">
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b">
-          <div className="flex items-center gap-2 px-4 ">
-            <SidebarTrigger className="-ml-1 text-foreground" />
-            <Separator
-              orientation="vertical"
-              className="mr-2 data-vertical:h-4 data-vertical:self-auto"
-            />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbPage>
-                    {curFolderName}
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-                <BreadcrumbLink className="flex md:hidden">
-                  [Work space name]
-                </BreadcrumbLink>
-                {curNoteName && (
-                  <>
-                    <BreadcrumbSeparator className="hidden md:block" />
-                    <BreadcrumbItem className="hidden md:block">
-                      <BreadcrumbPage>
-                        {curNoteName}
-                      </BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </>
-                )}
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-          <div className="ml-auto">
-            <button onClick={() => toggleTheme()} className="text-foreground p-4">
-              <SunMoon />
-            </button>
-          </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 min-h-0">
+    <MiddeSideBarProvider>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset className="h-screen">
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b">
+            <div className="flex items-center gap-2 px-4 ">
+              <SidebarTrigger className="-ml-1 text-foreground" />
+              <Separator
+                orientation="vertical"
+                className="mr-2 data-vertical:h-4 data-vertical:self-auto"
+              />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbPage>
+                      {curFolderName}
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                  <BreadcrumbLink className="flex md:hidden">
+                    [Work space name]
+                  </BreadcrumbLink>
+                  {curNoteName && (
+                    <>
+                      <BreadcrumbSeparator className="hidden md:block" />
+                      <BreadcrumbItem className="hidden md:block">
+                        <BreadcrumbPage>
+                          {curNoteName}
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+            <div className="ml-auto">
+              <button onClick={() => toggleTheme()} className="text-foreground p-4">
+                <SunMoon />
+              </button>
+            </div>
+          </header>
+          <div className="flex flex-1 flex-col gap-4 min-h-0">
             {children}
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </MiddeSideBarProvider>
   )
 }

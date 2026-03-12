@@ -4,6 +4,8 @@ import NoteCard from './note-card';
 import NotesHeader from './notes-header';
 import { getNotes } from '@/delete-later/data';
 import { useParams } from 'next/navigation';
+import { useNotes } from '@/hooks/use-notes';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const FolderContentBody = ({ onNoteClick }: {
     onNoteClick: (noteId: number) => void
@@ -11,9 +13,46 @@ const FolderContentBody = ({ onNoteClick }: {
 
     const { folderId, noteId } = useParams();
 
-    const numericNoteId = Number(noteId);
+    const numericFolderID = Number(folderId)
+    const numericNoteID = Number(noteId)
 
-    const notes = getNotes().filter((note) => note.folderId === Number(folderId))
+    const { data: notes } = useNotes(numericFolderID)
+
+    console.log(notes)
+    
+
+    if (!notes) return (
+        <div>
+            {/* Pinned Header Skeleton */}
+            <div className='flex items-center gap-2 p-3'>
+                <Skeleton className='h-4 w-4' />
+                <Skeleton className='h-4 w-24' />
+            </div>
+
+            {/* Pinned Notes Skeleton */}
+            <div className='p-3 py-4'>
+                <Skeleton className='h-32 w-full rounded-lg mb-2' />
+                {/* <Skeleton className='h-16 w-full rounded-lg' /> */}
+            </div>
+
+            {/* All Notes Header Skeleton */}
+            <div className='flex items-center gap-2 p-3'>
+                <Skeleton className='h-4 w-4' />
+                <Skeleton className='h-4 w-24' />
+            </div>
+
+            {/* Note Cards Skeleton */}
+            <div className='border-t'>
+                {Array.from({ length: 5 }).map((_, i) => (
+                    <div key={i} className='flex flex-col gap-2 p-3 border-b'>
+                        <Skeleton className='h-4 w-3/4' />
+                        <Skeleton className='h-3 w-full' />
+                        <Skeleton className='h-3 w-1/2' />
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
 
     return (
         <div>
@@ -35,7 +74,7 @@ const FolderContentBody = ({ onNoteClick }: {
             </div> */}
             <div className='border-t'>
                 {notes.map((note) => (
-                    <NoteCard isActive={note.id === numericNoteId } note={note} onNoteClick={onNoteClick} />
+                    <NoteCard key={note.id} isActive={numericNoteID === note.id} note={note} onNoteClick={onNoteClick} />
                 ))}
             </div>
         </div>

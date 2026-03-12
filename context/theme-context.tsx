@@ -11,13 +11,10 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | null>(null)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [isDark, setIsDark] = useState(true)
+  const [isDark, setIsDark] = useState(false)
 
   const toggleTheme = () => setIsDark(prev => !prev)
-
-  console.log(isDark);
   
-
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>
       {children}

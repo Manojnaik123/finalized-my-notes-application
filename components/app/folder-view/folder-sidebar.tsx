@@ -18,6 +18,7 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useMiddleSideBar } from "@/context/middle-sidebar-context";
 import { Heart } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
@@ -34,19 +35,17 @@ export default function FolderSidebar({ children }: { children: React.ReactNode 
         setselectedNoteId(noteId);
     }
 
+    const {isMiddleSideBarOpen} = useMiddleSideBar()
+    // const isActive: boolean = !true;
+
     return (
         <div className="w-full flex-1 flex flex-col min-h-0">
             <div className="flex flex-1 min-h-0">
-                {/* {!numericNoteId && (
-                    <div className="flex md:hidden w-full md:max-w-sm 2xl:w-1/4  border-r overflow-y-auto scrollbar-custom">
-                        <FolderContentView onNoteClick={handleNoteSelected} />
-                    </div>
-                )} */}
-                <div className={`${numericNoteId ? 'hidden md:flex' : 'flex'} w-full md:max-w-sm 2xl:w-1/4 border-r overflow-y-auto scrollbar-custom`}>
+                <div className={`${numericNoteId ? 'hidden md:flex' : 'flex'} ${isMiddleSideBarOpen? 'md:max-w-sm': 'max-w-14'} w-full  2xl:w-1/4 border-r overflow-y-auto scrollbar-custom`}>
                     <FolderContentView onNoteClick={handleNoteSelected} />
                 </div>
                 {(numericNoteId > 0) && (
-                    <div className="flex-1 2xl:w-3/4 px-8 py-6 overflow-y-auto scrollbar-custom">
+                    <div className="flex-1 2xl:w-3/4 ">
                         {children}
                     </div>
                 )}

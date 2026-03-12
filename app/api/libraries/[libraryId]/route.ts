@@ -43,7 +43,6 @@ export async function PUT(
     const { libraryId } = await context.params
     const body = await req.json();
 
-    // this will unsett all the other to is_default to false 
     if (body.is_default) {
       await supabase
         .from("libraries")

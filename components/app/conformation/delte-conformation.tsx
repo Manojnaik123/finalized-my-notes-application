@@ -8,6 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import { useTheme } from "@/context/theme-context"
 import { useDeleteLibrary } from "@/hooks/use-delete-library"
 import { LIBRARIES_KEY } from "@/lib/query-keys/query-keyx"
 import { Library } from "@/types/main-types/library"
@@ -16,13 +17,15 @@ import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 export function DeleteConformation({ open, setOpen, libraryId }: DeleteLibraryDialogProps) {
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
 
     const libraries = queryClient.getQueryData<Library[]>([LIBRARIES_KEY])
 
-    const libraryToBeDeleted = libraries?.find((library) => library.id === libraryId);
+    const libraryToBeDeleted = libraries?.find((library) => library.id === libraryId)
 
-    const { mutate: deleteLibrary } = useDeleteLibrary();
+    const { mutate: deleteLibrary } = useDeleteLibrary()
+
+    const {isDark} = useTheme()
 
     function handleDeletion() {
         deleteLibrary(libraryId, {
@@ -34,17 +37,19 @@ export function DeleteConformation({ open, setOpen, libraryId }: DeleteLibraryDi
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen} >
-            <DialogContent className="sm:max-w-sm">
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent className={`sm:max-w-sm ${isDark && 'dark'}`}>
                 <DialogHeader>
-                    <DialogTitle>Delete "{libraryToBeDeleted?.name}"</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-foreground">Delete "{libraryToBeDeleted?.name}"</DialogTitle>
+                    <DialogDescription className="text-foreground/50">
                         This will permanently delete the library and all its folders. This action cannot be undone.
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
+                        <Button className="text-foreground/50" variant="outline">
+                            Cancel
+                            </Button>
                     </DialogClose>
                     <Button variant={'destructive'} onClick={handleDeletion}>Delete</Button>
                 </DialogFooter>

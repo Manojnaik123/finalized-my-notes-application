@@ -24,10 +24,12 @@ const NoteCard = ({
     const y = variants[(Math.floor(Math.random() * 3) + 1) - 1]
     const z = variants[(Math.floor(Math.random() * 3) + 1) - 1]
 
-    const { folderId } = useParams();
+    const { folderId, libraryId } = useParams()
 
+    // console.log(note);
+    
     return (
-        <Link href={`/mynotes/dashboard/${folderId}/${note.id}`}
+        <Link href={`/mynotes/dashboard/${libraryId}/${folderId}/${note.id}`}
             className={`${isActive ? 'bg-foreground/5' : 'bg-transparent hover:bg-foreground/5'} flex border-b`}>
             <div className={`${isActive ? 'border-l-3 border-foreground/50' : 'border-l-3 border-transparent'}`} />
             <div className='p-4 flex flex-col gap-2'>

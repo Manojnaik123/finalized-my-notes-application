@@ -17,7 +17,7 @@ export function BreadcrumbMobile() {
   const curFolder = folders.find((folder) => folder.id === numericFolderId);
 
   return (
-    <Breadcrumb className="flex md:hidden">
+    <Breadcrumb className="">
       <BreadcrumbList>
         {/* <BreadcrumbItem>
           <BreadcrumbLink href="#">Base folder</BreadcrumbLink>
