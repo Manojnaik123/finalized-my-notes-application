@@ -23,5 +23,7 @@ export interface ToolTipProps {
 }
 
 export interface NoteHeaderProps {
+    text: string,
+    length: number,
     children: React.ReactNode,
 }

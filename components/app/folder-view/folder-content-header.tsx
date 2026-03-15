@@ -13,8 +13,8 @@ const FolderContentHeader = () => {
 
     return (
         <>
-        <AddFolderDialog open={showAddFolderDialog} setOpen={setShowAddFolderDilog}/>
-            <SearchInput />
+        {/* <AddFolderDialog open={showAddFolderDialog} setOpen={setShowAddFolderDilog}/> */}
+            {/* <SearchInput /> */}
             <div className='flex w-full gap-2'>
                 <Button variant={'outline'} className='grow text-secondary-foreground/70'>
                     <FilterIcon />

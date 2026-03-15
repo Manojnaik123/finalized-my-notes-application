@@ -24,7 +24,7 @@ import { Button } from "./ui/button"
 import { Dialog } from "./ui/dialog"
 import { AddFolderDialog } from "./app/dialogs/add-folder"
 import Link from "next/link"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useLibraries } from "@/hooks/use-libraries"
 import type { Folder } from "@/types/props-types/folder."
@@ -32,12 +32,14 @@ import { useFolders } from "@/hooks/use-folders"
 import { Skeleton } from "./ui/skeleton"
 import { useNotes } from "@/hooks/use-notes"
 import { NotesList } from "./notes-list"
+import { folderIcons } from "@/lib/color-and-icon/colors-and-icons"
 
 
 export function NavFolders() {
   const [folders, setFolders] = useState<Folder[]>([]);
   const [showAddFolderDialog, setShowAddFolderDialog] = useState<boolean>(false)
-  const { folderId, noteId } = useParams();
+  const { folderId, noteId } = useParams()
+  const router = useRouter()
   const numericNoteId = Number(noteId);
   const numericFolderId = Number(folderId);
 
@@ -51,7 +53,7 @@ export function NavFolders() {
 
   return (
     <>
-      <AddFolderDialog open={showAddFolderDialog} setOpen={setShowAddFolderDialog} />
+      <AddFolderDialog folderId={0} open={showAddFolderDialog} setOpen={setShowAddFolderDialog} />
       <SidebarGroup>
         <SidebarMenuItem className="flex justify-between items-center w-full">
           {isFolderDataLoading ? (
@@ -81,8 +83,13 @@ export function NavFolders() {
               ))}
             </div>
           ) : (
-            foldersData?.map((folder) => (
+            
+            foldersData?.map((folder) => {
+              const IconComponent = folderIcons.find(i => i.id === folder.icon_id)?.icon ?? FolderIcon  // ← add this
+
+              return (
               <Collapsible
+                onClick={() => router.push(`/mynotes/dashboard/${libraryId}/${folder.id}`)}
                 key={folder.folder_name}
                 asChild
                 defaultOpen={numericFolderId === folder.id}
@@ -91,7 +98,7 @@ export function NavFolders() {
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip={folder.folder_name}>
-                      <FolderIcon />
+                      <IconComponent className="w-4 h-4" />  {/* ← replace FolderIcon with this */}
                       <span>{folder.folder_name}</span>
                       <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                     </SidebarMenuButton>
@@ -103,93 +110,12 @@ export function NavFolders() {
                   </CollapsibleContent>
                 </SidebarMenuItem>
               </Collapsible>
-            ))
+              )
+            })
+            
           )}
         </SidebarMenu>
       </SidebarGroup>
     </>
   )
 }
-
-// export function NavFolders() {
-//   const [folders, setFolders] = useState<Folder[]>([]);
-//   const [showAddFolderDialog, setShowAddFolderDialog] = useState<boolean>(false)
-//   const { folderId, noteId } = useParams();
-//   const numericNoteId = Number(noteId);
-//   const numericFolderId = Number(folderId);
-
-//   const { data: libraries, error, isLoading } = useLibraries();
-
-//   const defaultLibraryId = libraries?.find((library) => library.is_default === true)?.id;
-
-//   const { libraryId } = useParams()
-//   const numericLibraryId = Number(libraryId)
-
-//   const { data: foldersData, isLoading: isFolderDataLoading } = useFolders(numericLibraryId)
-
-//   return (
-//     <>
-//       <AddFolderDialog open={showAddFolderDialog} setOpen={setShowAddFolderDialog} />
-//       <SidebarGroup>
-//         <SidebarMenuItem className="flex justify-between items-center w-full">
-//           {foldersData ? (
-//             <>
-//               <SidebarGroupLabel>
-//                 Folders
-//               </SidebarGroupLabel>
-//               <Button variant="ghost"
-//                 onClick={() => setShowAddFolderDialog(true)}>
-//                 <Plus />
-//               </Button>
-//             </>
-//           ) : (
-//             <div className="flex justify-between items-center gap-2 w-full pb-2">
-//               <div className="flex-1 flex h-4">
-//                 <Skeleton className="h-6 w-full" />
-//               </div>
-//               <div className="h-4 w-8">
-//                 <Skeleton className="size-6" />
-//               </div>
-//             </div>
-//           )}
-//         </SidebarMenuItem>
-//         <SidebarMenu>
-//           {!foldersData && (
-//             <div className="w-full flex flex-col gap-2 py-2">
-//               <Skeleton className="w-full h-6 rounded-md bg-foreground/5" />
-//               <Skeleton className="w-full h-6 rounded-md bg-foreground/5" />
-//               <Skeleton className="w-full h-6 rounded-md bg-foreground/5" />
-//             </div>
-//           )}
-//           {foldersData && foldersData.map((folder) => (
-//             <Collapsible
-//               key={folder.folder_name}
-//               asChild
-//               defaultOpen={numericFolderId === folder.id}
-//               className="group/collapsible"
-//             >
-//               <SidebarMenuItem>
-//                 <CollapsibleTrigger asChild>
-//                   <SidebarMenuButton tooltip={folder.folder_name}>
-//                     <FolderIcon />
-//                     <span>{folder.folder_name}</span>
-//                     <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-//                   </SidebarMenuButton>
-//                 </CollapsibleTrigger>
-//                 <CollapsibleContent>
-//                   <SidebarMenuSub>
-//                     <NotesList libraryId={numericLibraryId} folderId={folder.id} noteId={numericNoteId} />
-//                   </SidebarMenuSub>
-//                 </CollapsibleContent>
-//               </SidebarMenuItem>
-//             </Collapsible>
-//           ))}
-//         </SidebarMenu>
-//       </SidebarGroup>
-//     </>
-//   )
-// }
-
-
-// // these are the notes list inside the folder of the sidebar 
-

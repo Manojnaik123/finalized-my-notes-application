@@ -23,6 +23,9 @@ import { useState } from "react";
 
 export default function Page() {
 
+  console.log('manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj ');
+  
+
   const [selectedNoteId, setselectedNoteId] = useState<number>(0);
 
   function handleNoteSelected(noteId: number) {
@@ -31,23 +34,13 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center h-full text-center gap-3">
-        <NotebookPen className="w-10 h-10 text-muted-foreground" />
-        <h2 className="text-lg font-medium">No note selected</h2>
-        <p className="text-sm text-muted-foreground max-w-xs">
-          Pick a note from the list or create a new one to get started.
-        </p>
-        <button
-          // onClick={handleCreateNote}
-          className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm mt-2"
-        >
-          <Plus className="w-4 h-4" />
-          New Note
-        </button>
-      </div>
+      <h1 className="text-foreground">Add notes message</h1>
     </>
   )
 }
+
+
+
 
 
  // <div className="w-full flex-1 flex flex-col min-h-0">

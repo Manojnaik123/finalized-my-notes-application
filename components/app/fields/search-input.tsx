@@ -1,8 +1,16 @@
 import { Input } from '@/components/ui/input'
+import { useMiddleSideBar } from '@/context/middle-sidebar-context'
 import { Search } from 'lucide-react'
 import React from 'react'
 
-const SearchInput = () => {
+type SearchInputProps = {
+  handleSearch: (text: string) => void
+}
+
+const SearchInput = ({ handleSearch }: SearchInputProps) => {
+
+  const { setSearchQuery } = useMiddleSideBar()
+
   return (
     <div className='flex flex-1 gap-4'>
       <div className="relative grow">
@@ -10,6 +18,7 @@ const SearchInput = () => {
         <Input
           placeholder="Search notes..."
           className="pl-9 "
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
     </div>

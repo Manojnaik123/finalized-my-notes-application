@@ -2,39 +2,75 @@ import { NextRequest, NextResponse } from "next/server"
 import { ApiResponse } from "@/types/api/api-response"
 import { supabase } from "@/lib/data-base/supabase"
 import { Note } from "@/types/main-types/note"
+import { log } from "node:console"
 
-export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<Note[]>>> {
+export async function PUT(
+  req: NextRequest,
+  context: { params: Promise<{ noteId: string }> }
+) {
   try {
-    const { searchParams } = new URL(req.url)
-
-    const folder_id = searchParams.get("folderId")
-    const library_id = searchParams.get("libraryId")
-
-    console.log('libraryid' + library_id);
-
-
-    let query = supabase.from("notes")
-      .select("*")
-      .order("updated_at", { ascending: true });
-
-    if (folder_id) {
-      query = query.eq("folder_id", folder_id)
-    } else if (library_id) {
-      const { data: folders } = await supabase
-        .from("folders")
+    const { noteId } = await context.params
+    const body = await req.json()
+    const { title, content, is_favourite, is_pinned } = body
+    
+    if (is_pinned) {
+      const { data: pinnedNotes, error: countError } = await supabase
+        .from("notes")
         .select("id")
-        .eq("library_id", library_id)
+        .eq("folder_id", body.folder_id) 
+        .eq("is_pinned", is_pinned)
+        .neq("id", noteId)  
 
-      const folderIds = folders?.map((f) => f.id) ?? []
-      query = query.in("folder_id", folderIds).eq("is_favourite", true)
+      if (countError) {
+        return NextResponse.json({ data: null, error: countError.message }, { status: 500 })
+      }
+
+      if (pinnedNotes && pinnedNotes.length >= 5) {
+        return NextResponse.json(
+          { data: null, error: "You can only pin up to 5 notes per folder" },
+          { status: 403 }
+        )
+      }
     }
 
-    const { data, error } = await query
+    const updateData: Record<string, unknown> = { updated_at: new Date().toISOString() }
+    if (title !== undefined) updateData.title = title
+    if (content !== undefined) updateData.content = content
+    if (is_favourite !== undefined) updateData.is_favourite = is_favourite
+    if (is_pinned !== undefined) updateData.is_pinned = is_pinned
+
+    const { data, error } = await supabase
+      .from("notes")
+      .update(updateData)
+      .eq("id", noteId)
+      .select()
+      .single()
 
     if (error) {
       return NextResponse.json({ data: null, error: error.message }, { status: 500 })
     }
     return NextResponse.json({ data, error: null }, { status: 200 })
+  } catch (err) {
+    return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 })
+  }
+}
+
+export async function DELETE(
+  req: NextRequest,
+  context: { params: Promise<{ noteId: string }> }
+) {
+  try {
+    const { noteId } = await context.params
+
+    const { error } = await supabase
+      .from("notes")
+      .delete()
+      .eq("id", noteId)
+
+    if (error) {
+      return NextResponse.json({ data: null, error: error.message }, { status: 500 })
+    }
+    return NextResponse.json({ data: null, error: null }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 })
   }

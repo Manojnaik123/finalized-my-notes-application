@@ -1,5 +1,5 @@
 import { StickyNote } from "lucide-react"
-import { SidebarMenuSubButton, SidebarMenuSubItem } from "./ui/sidebar"
+import { SidebarGroupLabel, SidebarMenuSubButton, SidebarMenuSubItem } from "./ui/sidebar"
 import Link from "next/link"
 import { useNotes } from "@/hooks/use-notes"
 import { Skeleton } from "./ui/skeleton"
@@ -17,6 +17,14 @@ export function NotesList({ libraryId, folderId, noteId }: { libraryId: number, 
                     </SidebarMenuSubButton>
                 </SidebarMenuSubItem>
             ))}
+        </>
+    )
+
+    if (notes?.length === 0) return (
+        <>
+            <SidebarMenuSubItem>
+                <SidebarGroupLabel>No notes yet (add + link)</SidebarGroupLabel>
+            </SidebarMenuSubItem>
         </>
     )
 

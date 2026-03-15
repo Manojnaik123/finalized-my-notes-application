@@ -39,3 +39,28 @@ export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<No
     return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 })
   }
 }
+
+
+export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<Note>>> {
+  try {
+    const body = await req.json()
+    const { title, content, folder_id } = body
+
+    if (!folder_id) {
+      return NextResponse.json({ data: null, error: "folder_id is required" }, { status: 400 })
+    }
+
+    const { data, error } = await supabase
+      .from("notes")
+      .insert({ title, content, folder_id })
+      .select()
+      .single()
+
+    if (error) {
+      return NextResponse.json({ data: null, error: error.message }, { status: 500 })
+    }
+    return NextResponse.json({ data, error: null }, { status: 201 })
+  } catch (err) {
+    return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 })
+  }
+}

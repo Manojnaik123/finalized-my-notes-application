@@ -1,4 +1,5 @@
 export interface AddFolderDialogProps {
+    folderId: number,
     open: boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -6,7 +7,7 @@ export interface AddFolderDialogProps {
 export interface Folder {
     id: number, 
     folder_name: string, 
-    desccription?: string,
+    description?: string,
     user_id: number,
     library_id: number,
     icon_id?: number,

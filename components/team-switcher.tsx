@@ -34,7 +34,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Separator } from "./ui/separator"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { truncateString } from "@/lib/text-formaters/text-formaters"
-import { DeleteConformation } from "./app/conformation/delte-conformation"
+import { DeleteConformation } from "./app/conformation/library-delete-conformation"
 import { useSaveLibrary } from "@/hooks/use-add-library"
 import Link from "next/link"
 import { useParams, useRouter } from "next/navigation"
@@ -43,6 +43,10 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import NotImplemented from "./not-implemented"
 import { useTheme } from "@/context/theme-context"
 import { SIDEBAR_LIBRARY_LENGTH } from "@/lib/text-formaters/text-lengths"
+import { AlertDialogForDeletion } from "./app/conformation/delete-item-conformation"
+import { useDeleteLibrary } from "@/hooks/use-delete-library"
+import { toast } from "sonner"
+import { TOAST_POSITION } from "@/lib/query-keys/query-keyx"
 
 export function TeamSwitcher({
   teams,
@@ -80,6 +84,8 @@ export function TeamSwitcher({
 
   const router = useRouter();
 
+  const selectedLibrary = libraries.find((lib) => lib.id === selectedLibraryId);
+
   function handleAddEditLibraryClick(libraryId: number) {
     setSelectedLibraryId(libraryId)
     setAddLibraryDialogOpen(true)
@@ -95,16 +101,28 @@ export function TeamSwitcher({
   }
 
   function handleDefaultset(libraryId: number) {
-    saveLibrary({ id: libraryId, is_default: true })
+    saveLibrary({ id: libraryId, name: curLibrary.name, is_default: true })
   }
 
   const sortedLibraries = React.useMemo(() =>
     [...libraries].sort((a, b) => (b.is_default ? 1 : 0) - (a.is_default ? 1 : 0))
     , [libraries])
 
+  const { mutate: deleteLibrary } = useDeleteLibrary()
+
+ function handleLibraryDeletion() {
+        deleteLibrary(selectedLibraryId, {
+            onError: (err) => {
+                toast.error(`Failed to delete ${selectedLibrary?.name}. PLease try again later.`, { position: TOAST_POSITION });
+            }
+        })
+        setDeleteLibraryDialogOpen(false);
+    }
+
   return (
     <>
-      <DeleteConformation libraryId={selectedLibraryId} open={deleteLibraryDialogOpen} setOpen={setDeleteLibraryDialogOpen} />
+      <AlertDialogForDeletion handleDeletion={handleLibraryDeletion} itemName={selectedLibrary?.name!} itemType="library" open={deleteLibraryDialogOpen} setOpen={setDeleteLibraryDialogOpen} />
+      {/* <DeleteConformation libraryId={selectedLibraryId} open={deleteLibraryDialogOpen} setOpen={setDeleteLibraryDialogOpen} /> */}
       <AddLibraryDialog libraryId={selectedLibraryId} open={addLibraryDialogOpen} setOpen={setAddLibraryDialogOpen} />
       <SidebarMenu>
         <SidebarMenuItem>
@@ -187,8 +205,8 @@ export function TeamSwitcher({
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className={`${isDark && 'dark'}`}
-                        sideOffset={isMobile? -100 : 0}  // negative offset pulls it down below the trigger
-                        alignOffset={isMobile? 25 : 10}
+                        sideOffset={isMobile ? -100 : 0}  // negative offset pulls it down below the trigger
+                        alignOffset={isMobile ? 25 : 10}
                         avoidCollisions={false}>
                         <DropdownMenuItem onClick={() => handleLibrarySwitchClick(library.id)} className="hover:bg-foreground/5! hover:text-foreground! data-highlighted:bg-foreground/5! data-highlighted:text-foreground!">
                           <RefreshCcw />

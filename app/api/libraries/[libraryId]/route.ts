@@ -3,6 +3,7 @@ import { ApiResponse } from "@/types/api/api-response"
 import { Library } from "@/types/main-types/library"
 import { supabase } from "@/lib/data-base/supabase"
 import { Params } from "next/dist/server/request/params"
+import { validateLibraryNameServer } from "@/lib/validations/all-validations"
 
 // change library model to folder
 
@@ -41,7 +42,13 @@ export async function PUT(
 ) {
   try {
     const { libraryId } = await context.params
-    const body = await req.json();
+    const body = await req.json()
+
+    const inValidNameErrorMsg: string = validateLibraryNameServer(body.name) || '';
+
+    if (inValidNameErrorMsg) {
+      return NextResponse.json({ data: null, error: inValidNameErrorMsg }, { status: 400 })
+    }
 
     if (body.is_default) {
       await supabase
@@ -81,18 +88,29 @@ export async function DELETE(
   context: { params: Promise<{ libraryId: string }> }
 ) {
   try {
+    console.log('reached');
+    
     const { libraryId } = await context.params
 
-    const { error, count } = await supabase
+    console.log('libraryId' + libraryId);
+    
+
+    const { data, error } = await supabase
       .from("libraries")
       .delete()
       .eq("id", libraryId)
       .select()
+
     if (error) {
+      console.log(error.message);
+      
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 
-    if (!count || count === 0) {
+    console.log('reached');
+    
+
+    if (!data || data.length === 0) {
       return NextResponse.json({ error: "Something went wrong, try deleting folder after sometime." }, { status: 400 })
     }
 

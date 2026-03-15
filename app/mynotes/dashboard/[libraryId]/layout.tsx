@@ -18,10 +18,13 @@ import {
 import { useTheme } from "@/context/theme-context"
 import { SunMoon } from 'lucide-react'
 import { useParams } from "next/navigation";
-import { folders, getNotes } from "@/delete-later/data";
+// import { folders, getNotes } from "@/delete-later/data";
 import FolderSidebar from "@/components/app/folder-view/folder-sidebar";
 import { useLibraries } from "@/hooks/use-libraries"
 import { MiddeSideBarProvider } from "@/context/middle-sidebar-context"
+import Link from "next/link";
+import { useFolders } from "@/hooks/use-folders";
+import { useNotes } from "@/hooks/use-notes";
 
 export default function DashboardLayout({
   children,
@@ -33,12 +36,18 @@ export default function DashboardLayout({
   const { folderId, noteId, libraryId } = useParams();
 
   const numericNoteId = Number(noteId);
+  const numericFolderId = Number(folderId);
+  const numericLibraryId = Number(libraryId);
 
-  const { data: libraries, isLoading, isError } = useLibraries();
+  const { data: libraries, isLoading, isError } = useLibraries()
+  const { data: folders } = useFolders(numericLibraryId)
+  const { data: notes } = useNotes(numericFolderId)
 
-  const curFolderName = folders.find((folder) => folder.id === Number(folderId))?.title;
+  const curLibraryName = libraries?.find((lib) => lib.id === numericLibraryId)?.name
 
-  const curNoteName = getNotes().find((note) => note.id === numericNoteId)?.title;
+  const curFolderName = folders?.find((folder) => folder.id === Number(folderId))?.folder_name;
+
+  const curNoteName = notes?.find((note) => note.id === numericNoteId)?.title
 
   return (
     <MiddeSideBarProvider>
@@ -54,24 +63,19 @@ export default function DashboardLayout({
               />
               <Breadcrumb>
                 <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbPage>
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-muted-foreground">{curLibraryName}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                  {curFolderName && <BreadcrumbSeparator />}
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className={curNoteName ? "text-muted-foreground" : "text-foreground"}>
                       {curFolderName}
                     </BreadcrumbPage>
                   </BreadcrumbItem>
-                  <BreadcrumbLink className="flex md:hidden">
-                    [Work space name]
-                  </BreadcrumbLink>
-                  {curNoteName && (
-                    <>
-                      <BreadcrumbSeparator className="hidden md:block" />
-                      <BreadcrumbItem className="hidden md:block">
-                        <BreadcrumbPage>
-                          {curNoteName}
-                        </BreadcrumbPage>
-                      </BreadcrumbItem>
-                    </>
-                  )}
+                  {curNoteName && <BreadcrumbSeparator />}
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-foreground">{curNoteName}</BreadcrumbPage>
+                  </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
             </div>

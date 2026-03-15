@@ -18,62 +18,51 @@ const FolderContentBody = ({ onNoteClick }: {
 
     const { data: notes } = useNotes(numericFolderID)
 
-    console.log(notes)
+    // console.log(notes)
     
+    // if (!notes) return (
+    //     <div>
+    //         <div className='flex items-center gap-2 p-3'>
+    //             <Skeleton className='h-4 w-4' />
+    //             <Skeleton className='h-4 w-24' />
+    //         </div>
 
-    if (!notes) return (
-        <div>
-            {/* Pinned Header Skeleton */}
-            <div className='flex items-center gap-2 p-3'>
-                <Skeleton className='h-4 w-4' />
-                <Skeleton className='h-4 w-24' />
-            </div>
+    //         <div className='p-3 py-4'>
+    //             <Skeleton className='h-32 w-full rounded-lg mb-2' />
+    //         </div>
 
-            {/* Pinned Notes Skeleton */}
-            <div className='p-3 py-4'>
-                <Skeleton className='h-32 w-full rounded-lg mb-2' />
-                {/* <Skeleton className='h-16 w-full rounded-lg' /> */}
-            </div>
+    //         <div className='flex items-center gap-2 p-3'>
+    //             <Skeleton className='h-4 w-4' />
+    //             <Skeleton className='h-4 w-24' />
+    //         </div>
 
-            {/* All Notes Header Skeleton */}
-            <div className='flex items-center gap-2 p-3'>
-                <Skeleton className='h-4 w-4' />
-                <Skeleton className='h-4 w-24' />
-            </div>
-
-            {/* Note Cards Skeleton */}
-            <div className='border-t'>
-                {Array.from({ length: 5 }).map((_, i) => (
-                    <div key={i} className='flex flex-col gap-2 p-3 border-b'>
-                        <Skeleton className='h-4 w-3/4' />
-                        <Skeleton className='h-3 w-full' />
-                        <Skeleton className='h-3 w-1/2' />
-                    </div>
-                ))}
-            </div>
-        </div>
-    )
+    //         <div className='border-t'>
+    //             {Array.from({ length: 5 }).map((_, i) => (
+    //                 <div key={i} className='flex flex-col gap-2 p-3 border-b'>
+    //                     <Skeleton className='h-4 w-3/4' />
+    //                     <Skeleton className='h-3 w-full' />
+    //                     <Skeleton className='h-3 w-1/2' />
+    //                 </div>
+    //             ))}
+    //         </div>
+    //     </div>
+    // )
 
     return (
         <div>
-            <NotesHeader>
+            {/* <NotesHeader> */}
                 <Pin className='h-4 text-foreground' />
-            </NotesHeader>
+            {/* </NotesHeader> */}
             <div className='p-3 py-4'>
                 <NoNotesComp title='Pinned Notes' description='Click + to create your first note'>
                     <Pin />
                 </NoNotesComp>
             </div>
-            <NotesHeader>
+            {/* <NotesHeader> */}
                 <Book className='h-4 text-foreground' />
-            </NotesHeader>
-            {/* <div className='p-2'>
-                <NoNotesComp title='All Notes' description='Click + to create your first note'>
-                    <Book />
-                </NoNotesComp>
-            </div> */}
+            {/* </NotesHeader> */}
             <div className='border-t'>
-                {notes.map((note) => (
+                {notes && notes.map((note) => (
                     <NoteCard key={note.id} isActive={numericNoteID === note.id} note={note} onNoteClick={onNoteClick} />
                 ))}
             </div>

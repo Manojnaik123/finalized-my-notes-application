@@ -146,7 +146,7 @@ export function AddLibraryDialog({ open, setOpen, libraryId }: AddLibraryDialogP
                         <DialogClose asChild>
                             <Button variant="outline">Cancel</Button>
                         </DialogClose>
-                        <Button type="submit">add library</Button>
+                        <Button type="submit">{libraryId > 0 ? 'save changes' : 'add library'}</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

@@ -2,17 +2,13 @@ import { NextRequest, NextResponse } from "next/server"
 import { ApiResponse } from "@/types/api/api-response"
 import { Folder } from "@/types/props-types/folder.";
 import { supabase } from "@/lib/data-base/supabase"
+import { validateFolderNameServer } from "@/lib/validations/all-validations";
 
 export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<Folder[]>>> {
   try {
-    console.log('reached');
-    
     const { searchParams } = new URL(req.url)
 
     const library_Id = searchParams.get("libraryId")
-
-    console.log(library_Id);
-    
 
     let query = supabase.from("folders")
       .select("*")
@@ -33,31 +29,35 @@ export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<Fo
   }
 }
 
-// export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<Library>>> {
-//   try {
-//     const body = await req.json()
-//     const { name } = body
+export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<Folder>>> {
+  try {
 
-//     if (!name) {
-//       return NextResponse.json({ data: null, error: "Library Name is required" }, { status: 400 })
-//     }
+    const userId = 1
+    // const icon_id = 1
+    // const library_id = 1
 
-//     const userId = 1
-//     const color_id = 1
+    const body = await req.json()
+    const { folder_name, library_id, icon_id } = body
+    
+    const inValidNameErrorMsg: string = validateFolderNameServer(folder_name) || '';
 
-//     const { data, error } = await supabase
-//       .from("libraries")
-//       .insert({ name, color_id, user_id: userId })
-//       .select()
-//       .single()
+    if (inValidNameErrorMsg) {
+      return NextResponse.json({ data: null, error: inValidNameErrorMsg }, { status: 400 })
+    }
 
-//     if (error) {
-//       return NextResponse.json({ data: null, error: error.message }, { status: 500 })
-//     }
+    const { data, error } = await supabase
+      .from("folders")
+      .insert({ folder_name, icon_id, user_id: userId, library_id  })
+      .select()
+      .single()
 
-//     return NextResponse.json({ data, error: null }, { status: 201 })
+    if (error) {
+      return NextResponse.json({ data: null, error: error.message }, { status: 500 })
+    }
 
-//   } catch (err) {
-//     return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 })
-//   }
-// }
+    return NextResponse.json({ data, error: null }, { status: 201 })
+
+  } catch (err) {
+    return NextResponse.json({ data: null, error: "Internal server error: Failed to save the folder" }, { status: 500 })
+  }
+}

@@ -34,52 +34,51 @@ export const libraryColors: Color[] = [
 ]
 
 export const folderIcons: Icon[] = [
-    {
-        id: 10,
-        icon: Folder
-    },
-    {
-        id: 1,
-        icon: Star
-    },
-    {
-        id: 2,
-        icon: BookMarked
-    },
-    {
-        id: 3,
-        icon: Heart
-    },
-    {
-        id: 4,
-        icon: FolderCode
-    },
-    {
-        id: 5,
-        icon: Lightbulb
-    },
-    {
-        id: 6,
-        icon: House
-    },
-    {
-        id: 7,
-        icon: Hospital
-    },
-    {
-        id: 8,
-        icon: Target
-    },
-    {
-        id: 7,
-        icon: Wallet
-    },
-    {
-        id: 8,
-        icon: Trophy
-    },
+  {
+    id: 1,
+    icon: Folder
+  },
+  {
+    id: 2,
+    icon: Star
+  },
+  {
+    id: 3,
+    icon: BookMarked
+  },
+  {
+    id: 4,
+    icon: Heart
+  },
+  {
+    id: 5,
+    icon: FolderCode
+  },
+  {
+    id: 6,
+    icon: Lightbulb
+  },
+  {
+    id: 7,
+    icon: House
+  },
+  {
+    id: 8,
+    icon: Hospital
+  },
+  {
+    id: 9,
+    icon: Target
+  },
+  {
+    id: 10,
+    icon: Wallet
+  },
+  {
+    id: 11,
+    icon: Trophy
+  },
 ]
-
 
 
 
