@@ -6,6 +6,7 @@ export interface Note {
     folder_id: number,
     is_pinned?: boolean,
     is_favourite?: boolean,
+    is_public?: boolean,
     updated_at: string,
     created_at: string,
 }

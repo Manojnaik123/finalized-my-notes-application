@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* remove this bg */}
-      <body className={`bg-black ${geist.className}`}>
+      <body className={` ${geist.className}`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>

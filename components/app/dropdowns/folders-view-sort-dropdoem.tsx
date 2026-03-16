@@ -21,9 +21,10 @@ export function SortDropDown() {
     }
 
     return (
-        <DropdownMenu>
+        <div className='flex-1'>
+            <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant={'outline'} className='grow text-secondary-foreground/70'>
+                <Button variant={'outline'} className='w-full grow text-secondary-foreground/70'>
                     <ArrowUpNarrowWide />
                     Sort
                 </Button>
@@ -32,7 +33,7 @@ export function SortDropDown() {
                 <DropdownMenuGroup>
                     <DropdownMenuLabel>Sort by</DropdownMenuLabel>
                     <DropdownMenuItem onClick={() => handleSorting('last-edited')}>
-                        Last Created
+                        Last Edited
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleSorting('date-created')}> 
                         Created Date
@@ -46,5 +47,6 @@ export function SortDropDown() {
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
+        </div>
     )
 }

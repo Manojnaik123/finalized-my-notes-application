@@ -1,5 +1,6 @@
 "use client"
 
+import { FilterState } from "@/types/main-types/filters"
 import React, { createContext, useContext, useState } from "react"
 
 type MiddleSideBarContextType = {
@@ -9,11 +10,14 @@ type MiddleSideBarContextType = {
     isToggleDisabled: boolean
     setIsToggleDisabled: React.Dispatch<React.SetStateAction<boolean>>
 
-    // new ones 
     sortBy: string
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     setSortBy: React.Dispatch<React.SetStateAction<string>>
+
+    // new ones 
+    filterState: FilterState
+    setFilterState: React.Dispatch<React.SetStateAction<FilterState>>
 }
 
 const MiddleSideBarContext = createContext<MiddleSideBarContextType | null>(null)
@@ -26,6 +30,13 @@ export function MiddeSideBarProvider({ children }: { children: React.ReactNode }
     const [searchQuery, setSearchQuery] = useState("")
     const [sortBy, setSortBy] = useState("last-edited")
 
+    const [filterState, setFilterState] = useState<FilterState>({
+        pinned: false,
+        favourited: false,
+        date: [],
+        readTime: [],
+    })
+
     const toggleMiddleSideBar = () => {
         if (!isToggleDisabled) setIsMiddleSideBarOpen(prev => !prev)  // ← guard
     }
@@ -36,12 +47,15 @@ export function MiddeSideBarProvider({ children }: { children: React.ReactNode }
             setSearchQuery,
             setSortBy,
             sortBy,
-            // ^ new ones 
+            
             isMiddleSideBarOpen,
             toggleMiddleSideBar,
             setIsMiddleSideBarOpen,
             isToggleDisabled,
-            setIsToggleDisabled
+            setIsToggleDisabled,
+            // new ones 
+            filterState,
+            setFilterState,
         }}>
             {children}
         </MiddleSideBarContext.Provider>
@@ -72,7 +86,7 @@ export function useMiddleSideBar() {
 //     isToggleDisabled: boolean
 //     setIsToggleDisabled: React.Dispatch<React.SetStateAction<boolean>>
 
-//     // new ones 
+//     // new ones
 //     sortBy: string
 //     searchQuery: string
 //     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
@@ -85,7 +99,7 @@ export function useMiddleSideBar() {
 //     const [isMiddleSideBarOpen, setIsMiddleSideBarOpen] = useState(true)
 //     const [isToggleDisabled, setIsToggleDisabled] = useState(false)
 
-//     // new ones 
+//     // new ones
 //     const [searchQuery, setSearchQuery] = useState("")
 //     const [sortBy, setSortBy] = useState("last-edited")
 
@@ -99,7 +113,7 @@ export function useMiddleSideBar() {
 //             setSearchQuery,
 //             setSortBy,
 //             sortBy,
-//             // ^ new ones 
+//             // ^ new ones
 //             isMiddleSideBarOpen,
 //             toggleMiddleSideBar,
 //             setIsMiddleSideBarOpen,

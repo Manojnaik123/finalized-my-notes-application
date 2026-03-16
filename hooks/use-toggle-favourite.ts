@@ -24,8 +24,8 @@ export function useToggleFavourite(libraryId: number, folderId: number) {
       await queryClient.cancelQueries({ queryKey: [NOTES_KEY, folderId] })
       await queryClient.cancelQueries({ queryKey: [NOTES_KEY, 'library', libraryId] })
 
-      queryClient.invalidateQueries({ queryKey: [NOTES_KEY, folderId] })
-      queryClient.invalidateQueries({ queryKey: [NOTES_KEY, 'library', libraryId] })
+      // queryClient.invalidateQueries({ queryKey: [NOTES_KEY, folderId] })
+      // queryClient.invalidateQueries({ queryKey: [NOTES_KEY, 'library', libraryId] })
 
       const previousNotes = queryClient.getQueryData<Note[]>([NOTES_KEY, folderId])
       const previousLibraryNotes = queryClient.getQueryData<Note[]>([NOTES_KEY, 'library', libraryId])

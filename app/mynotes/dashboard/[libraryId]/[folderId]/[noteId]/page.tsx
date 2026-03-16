@@ -26,6 +26,7 @@ import { toast } from 'sonner';
 import { useToggleFavourite } from '@/hooks/use-toggle-favourite';
 import { useToggleNotePin } from '@/hooks/use-toggle-pinned-note';
 import { formatCreatedDate } from '@/lib/text-formaters/text-formaters';
+import { PopoverDemo } from '@/components/app/dropdowns/sharable-popover';
 
 const NotePage = () => {
     const [showAlertDialog, setShowAlertDialog] = useState<boolean>(false)
@@ -56,7 +57,7 @@ const NotePage = () => {
         if (saveStatus === 'saved') return (
             <span className="flex items-center gap-1 text-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                All changes saved
+                all changes saved
             </span>
         )
         // if (saveStatus === 'unsaved') return <span className='text-xs text-muted-foreground flex items-center gap-1'><SaveOff className='h-4' /> unsaved</span>
@@ -171,9 +172,10 @@ const NotePage = () => {
                                 </Button>
                             )}
 
-                            <Button variant={'ghost'} className='rounded-full'>
+                            {/* <Button variant={'ghost'} className='rounded-full'>
                                 <Users />
-                            </Button>
+                            </Button> */}
+                            <PopoverDemo/>
                             {currentNote && (
                                 <NoteViewDropDown note={currentNote} handleNotePinToggle={handleNotePinToggle} setDeleteAlertOpen={setShowAlertDialog} />
                             )}
@@ -197,7 +199,7 @@ const NotePage = () => {
                     </div>
                 </div>
 
-                <div className='flex items-center justify-between border-t px-4 py-1 text-foreground/50 flex-shrink-0'>
+                <div className='flex items-center justify-between border-t px-4 py-2 text-foreground/50 flex-shrink-0'>
                     <div className=''>
                         <SaveIndicator />
                     </div>

@@ -24,9 +24,10 @@ export function useNewNote() {
   const { mutate, isPending } = useMutation({
     mutationFn: createNote,
     onSuccess: (newNote) => {
-      queryClient.setQueryData<Note[]>([NOTES_KEY, numericFolderID], (old) =>
-        old ? [...old, newNote] : [newNote]
-      )
+      // queryClient.setQueryData<Note[]>([NOTES_KEY, numericFolderID], (old) =>
+      //   old ? [...old, newNote] : [newNote]
+      // )
+      queryClient.invalidateQueries({ queryKey: [NOTES_KEY, numericFolderID] })
       router.push(`/mynotes/dashboard/${libraryId}/${folderId}/${newNote.id}`)
     },
     onError: () => {
