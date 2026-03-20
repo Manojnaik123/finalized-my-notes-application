@@ -5,6 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { useTheme } from "@/context/theme-context"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useState } from "react"
+import { ClerkProvider, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { ThemeProvider } from "@/components/theme-provider";
+
 
 export default function MynotesLayout({
     children,
@@ -15,13 +18,17 @@ export default function MynotesLayout({
     const [queryClient] = useState(() => new QueryClient())
 
     return (
-        <main className={isDark ? 'dark' : ''}>
-            <Toaster/>
-            <QueryClientProvider client={queryClient}>
-                <TooltipProvider>
-                    {children}
-                </TooltipProvider>
-            </QueryClientProvider>
-        </main>
+        <ThemeProvider>
+            <main className={isDark ? 'dark' : ''}>
+                <Toaster />
+                <QueryClientProvider client={queryClient}>
+                    <TooltipProvider>
+                        {children}
+                    </TooltipProvider>
+                </QueryClientProvider>
+
+            </main>
+        </ThemeProvider>
+
     )
 }

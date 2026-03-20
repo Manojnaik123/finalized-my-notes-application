@@ -25,12 +25,29 @@ import { MiddeSideBarProvider } from "@/context/middle-sidebar-context"
 import Link from "next/link";
 import { useFolders } from "@/hooks/use-folders";
 import { useNotes } from "@/hooks/use-notes";
+import { ClerkProvider, SignInButton, SignOutButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { useAuth } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+
+  // remove this 
+  // const { user } = useAuth();
+
+  const { user } = useUser()
+
+  console.log(' this is from the layout ');
+  console.log(user?.id);
+  console.log(user?.emailAddresses[0].emailAddress);
+  console.log(user?.imageUrl);
+
+
   const { toggleTheme } = useTheme();
 
   const { folderId, noteId, libraryId } = useParams();
@@ -79,10 +96,42 @@ export default function DashboardLayout({
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto flex">
               <button onClick={() => toggleTheme()} className="text-foreground p-4">
                 <SunMoon />
               </button>
+
+              {/* <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "w-10 h-10 border-primary",
+                    userButtonPopoverCard: " shadow-lg",
+                    userButtonPopoverActionButton: "hover:bg-muted",
+                  },
+                }}
+              /> */}
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-2">
+                    <img
+                      src={user?.imageUrl}
+                      className="w-8 h-8 rounded-full"
+                    />
+                    {/* <span>{user?.firstName}</span> */}
+                  </button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Settings</DropdownMenuItem>
+
+                  <SignOutButton>
+                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                  </SignOutButton>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 min-h-0">
