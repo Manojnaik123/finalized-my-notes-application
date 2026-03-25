@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { useRouter, useParams } from "next/navigation"
-import { NOTES_KEY } from "@/lib/query-keys/query-keyx"
+import { NOTES_KEY, TOAST_POSITION } from "@/lib/query-keys/query-keyx"
 import { Note } from "@/types/main-types/note"
 import { toast } from "sonner"
 
@@ -31,7 +31,7 @@ export function useNewNote() {
       router.push(`/mynotes/dashboard/${libraryId}/${folderId}/${newNote.id}`)
     },
     onError: () => {
-      toast.error("Failed to create note")
+      toast.error("Failed to create note", {position: TOAST_POSITION})
     }
   })
 

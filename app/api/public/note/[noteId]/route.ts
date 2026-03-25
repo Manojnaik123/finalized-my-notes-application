@@ -6,9 +6,14 @@ export async function GET(
     context: { params: Promise<{ noteId: string }> }
 ) {
     try {
-        console.log('reached');
+
+        console.log('reached to get public');
         
         const { noteId } = await context.params
+
+        console.log('reached get of public');
+        console.log(noteId);
+
 
         const { data: note, error } = await supabase
             .from("notes")

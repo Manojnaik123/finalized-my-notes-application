@@ -28,6 +28,10 @@ import { useToggleNotePin } from '@/hooks/use-toggle-pinned-note';
 import { formatCreatedDate } from '@/lib/text-formaters/text-formaters';
 import { PopoverDemo } from '@/components/app/dropdowns/sharable-popover';
 
+import { useUser } from '@clerk/nextjs';
+import { useToggleNotePublic } from '@/hooks/use-toggle-note-public';
+import { useQuery } from '@tanstack/react-query';
+
 const NotePage = () => {
     const [showAlertDialog, setShowAlertDialog] = useState<boolean>(false)
     const [showSkeleton, setShowSkeleton] = useState<boolean>(true)
@@ -42,7 +46,13 @@ const NotePage = () => {
     const queryClient = useQueryClient()
     const { toggleMiddleSideBar, isToggleDisabled } = useMiddleSideBar()
 
-    const notes = queryClient.getQueryData<Note[]>([NOTES_KEY, numericFolderID])
+    // const notes = queryClient.getQueryData<Note[]>([NOTES_KEY, numericFolderID])
+
+    const { data: notes } = useQuery<Note[]>({
+        queryKey: [NOTES_KEY, numericFolderID],
+        enabled: false, // don't refetch, just subscribe to existing cache
+        staleTime: Infinity,
+    })
 
     const currentNote = notes?.find((note) => note.id === numericNoteID)
 
@@ -72,6 +82,10 @@ const NotePage = () => {
     const { mutate: toggleFavourite } = useToggleFavourite(numericLibraryID, numericFolderID)
 
     const { mutate: toggleNotePin } = useToggleNotePin(numericFolderID)
+
+    const { user } = useUser()
+
+    const clerkId = user?.id
 
     function handleNoteDeletion() {
         router.push(`/mynotes/dashboard/${numericLibraryID}/${numericFolderID}`)
@@ -105,6 +119,16 @@ const NotePage = () => {
                     position: TOAST_POSITION
                 })
             }
+        })
+    }
+
+    const { togglePublic } = useToggleNotePublic(numericFolderID)
+
+    function handleToggleSharable() {
+        if (!currentNote) return
+        togglePublic({
+            noteId: numericNoteID,
+            isPublic: !currentNote.is_public
         })
     }
 
@@ -171,11 +195,7 @@ const NotePage = () => {
                                     <Heart className={currentNote?.is_favourite ? "fill-red-500 text-red-500" : ""} />
                                 </Button>
                             )}
-
-                            {/* <Button variant={'ghost'} className='rounded-full'>
-                                <Users />
-                            </Button> */}
-                            <PopoverDemo/>
+                            <PopoverDemo noteId={currentNote?.id ?? 0} isPublic={currentNote?.is_public ?? false} onTogglePublic={handleToggleSharable} />
                             {currentNote && (
                                 <NoteViewDropDown note={currentNote} handleNotePinToggle={handleNotePinToggle} setDeleteAlertOpen={setShowAlertDialog} />
                             )}

@@ -75,3 +75,27 @@ export async function DELETE(
     return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 })
   }
 }
+
+export async function PATCH(
+  req: NextRequest,
+  context: { params: Promise<{ noteId: string }> }
+) {
+  try {
+    const { noteId } = await context.params
+    const { is_public } = await req.json()
+
+    const { data, error } = await supabase
+      .from("notes")
+      .update({ is_public })
+      .eq("id", noteId)
+      .select()
+      .single()
+
+    if (error) {
+      return NextResponse.json({ data: null, error: error.message }, { status: 500 })
+    }
+    return NextResponse.json({ data, error: null }, { status: 200 })
+  } catch (err) {
+    return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 })
+  }
+}

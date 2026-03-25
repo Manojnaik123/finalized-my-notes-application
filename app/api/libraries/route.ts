@@ -3,24 +3,26 @@ import { ApiResponse } from "@/types/api/api-response"
 import { Library } from "@/types/main-types/library"
 import { supabase } from "@/lib/data-base/supabase"
 import { validateLibraryNameServer } from "@/lib/validations/all-validations";
+import { auth } from '@clerk/nextjs/server'
+import { getUserByClerkId } from "@/lib/data-base/users";
 
 export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<Library[]>>> {
   try {
-    const userId = 1;
+    const { userId: clerkId } = await auth()
 
-    let query = supabase.from("libraries")
+    if (!clerkId) return NextResponse.json({ data: null, error: "Unauthorized" }, { status: 401 })
+
+    const user = await getUserByClerkId(clerkId)
+
+    if (!user) return NextResponse.json({ data: null, error: "User not found" }, { status: 404 })
+
+    const { data, error } = await supabase
+      .from("libraries")
       .select("*")
-      .order("created_at", { ascending: true });
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: true })
 
-    if (userId) {
-      query = query.eq("user_id", userId)
-    }
-
-    const { data, error } = await query
-
-    if (error) {
-      return NextResponse.json({ data: null, error: error.message }, { status: 500 })
-    }
+    if (error) return NextResponse.json({ data: null, error: error.message }, { status: 500 })
 
     return NextResponse.json({ data, error: null }, { status: 200 })
 
@@ -31,19 +33,27 @@ export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<Li
 
 export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<Library>>> {
   try {
+    const { userId: clerkId } = await auth()
+
+    if (!clerkId) return NextResponse.json({ data: null, error: "Unauthorized" }, { status: 401 })
+
+    const user = await getUserByClerkId(clerkId)
+
+    if (!user) return NextResponse.json({ data: null, error: "User not found" }, { status: 404 })
+
     const body = await req.json()
+
     const { name, description, color_id } = body
 
     const inValidNameErrorMsg: string = validateLibraryNameServer(name) || '';
 
-    if (inValidNameErrorMsg) {    
+    if (inValidNameErrorMsg) {
       return NextResponse.json({ data: null, error: inValidNameErrorMsg }, { status: 400 })
     }
-    const userId = 1
 
     const { data, error } = await supabase
       .from("libraries")
-      .insert({ name, color_id, user_id: userId, description })
+      .insert({ name, color_id, user_id: user.id, description })
       .select()
       .single()
 

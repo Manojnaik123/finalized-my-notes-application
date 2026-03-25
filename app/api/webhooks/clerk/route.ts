@@ -1,15 +1,15 @@
 import { WebhookEvent } from "@clerk/nextjs/server"
 import { headers } from "next/headers"
 import { Webhook } from 'svix'
-
+import { supabase } from "@/lib/data-base/supabase"
 
 export async function POST(req: Request) {
+    console.log('reached the web');
+    
     const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
 
     if (!WEBHOOK_SECRET) {
-        throw new Error(
-            'Please add clerk web hook to .env'
-        )
+        throw new Error('Please add clerk web hook to .env')
     }
 
     const headerPayload = headers()
@@ -18,9 +18,7 @@ export async function POST(req: Request) {
     const svix_signature = (await headerPayload).get('svix-signature')
 
     if (!svix_id || !svix_timestamp || !svix_signature) {
-        return new Response('Error occured', {
-            status: 400
-        })
+        return new Response('Error occured', { status: 400 })
     }
 
     const payload = await req.json()
@@ -37,34 +35,35 @@ export async function POST(req: Request) {
             'svix-signature': svix_signature
         }) as WebhookEvent
     } catch (err) {
-        console.log('Error verifyng webhook:', err)
-        return new Response('Error occured', {
-            status: 400
-        })
+        console.log('Error verifying webhook:', err)
+        return new Response('Error occured', { status: 400 })
     }
 
     const eventType = evt.type
 
     if (eventType === 'user.created') {
-        const { id, email_addresses, first_name, last_name, image_url } = evt.data
+        const { id, email_addresses, first_name, last_name } = evt.data
 
         if (!id || !email_addresses) {
-            return new Response('Error occured -- missing data', {
-                status: 400
+            return new Response('Error occured -- missing data', { status: 400 })
+        }
+
+        const userName = [first_name, last_name].filter(Boolean).join(' ') 
+            || email_addresses[0].email_address.split('@')[0]
+
+        const { data, error } = await supabase
+            .from('users')
+            .insert({
+                clerk_id: id,
+                email: email_addresses[0].email_address,
+                user_name: userName,
             })
-        }
+            .select()
+            .single()
 
-        const user = {
-            clerkUserId: id,
-            email: email_addresses[0].email_address,
-            ...(first_name ? { firstName: first_name } : {}),
-            ...(last_name ? { lastName: last_name } : {}),
-            ...(image_url ? { imgUrl: image_url } : {})
+        if (error) {
+            return new Response('Error saving user', { status: 500 })
         }
-
-        console.log(user);
-        // add the data to save the user data in the db here 
-        // await createuser
     }
     return new Response('', { status: 200 })
 }

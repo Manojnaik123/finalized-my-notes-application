@@ -47,6 +47,7 @@ import { AlertDialogForDeletion } from "./app/conformation/delete-item-conformat
 import { useDeleteLibrary } from "@/hooks/use-delete-library"
 import { toast } from "sonner"
 import { TOAST_POSITION } from "@/lib/query-keys/query-keyx"
+import { useUpdateLibraryDefault } from "@/hooks/use-update-library-default"
 
 export function TeamSwitcher({
   teams,
@@ -71,7 +72,7 @@ export function TeamSwitcher({
 
   const { mutate: saveLibrary } = useSaveLibrary()
 
-  // const { libraryId } = useParams()
+  const { updateDefault } = useUpdateLibraryDefault()
 
   const params = useParams()
 
@@ -100,8 +101,8 @@ export function TeamSwitcher({
     router.replace(`/mynotes/dashboard/${libraryId}`)
   }
 
-  function handleDefaultset(libraryId: number) {
-    saveLibrary({ id: libraryId, name: curLibrary.name, is_default: true })
+  async function handleDefaultset(libraryId: number) {
+    updateDefault({libraryId: libraryId.toString() , isDefault: true})
   }
 
   const sortedLibraries = React.useMemo(() =>
@@ -110,14 +111,14 @@ export function TeamSwitcher({
 
   const { mutate: deleteLibrary } = useDeleteLibrary()
 
- function handleLibraryDeletion() {
-        deleteLibrary(selectedLibraryId, {
-            onError: (err) => {
-                toast.error(`Failed to delete ${selectedLibrary?.name}. PLease try again later.`, { position: TOAST_POSITION });
-            }
-        })
-        setDeleteLibraryDialogOpen(false);
-    }
+  function handleLibraryDeletion() {
+    deleteLibrary(selectedLibraryId, {
+      onError: (err) => {
+        toast.error(`Failed to delete ${selectedLibrary?.name}. PLease try again later.`, { position: TOAST_POSITION });
+      }
+    })
+    setDeleteLibraryDialogOpen(false);
+  }
 
   return (
     <>
@@ -128,7 +129,7 @@ export function TeamSwitcher({
         <SidebarMenuItem>
           <DropdownMenu >
             <DropdownMenuTrigger asChild>
-              {curLibrary ? (
+              {!isLoading ? (
                 <SidebarMenuButton
                   size="lg"
                   className=" data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"

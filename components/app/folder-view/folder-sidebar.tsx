@@ -108,7 +108,7 @@ export default function FolderSidebar({ children }: { children: React.ReactNode 
                         {children}
                     </div>
                 ) : (
-                    <div className="w-full flex flex-col items-center justify-center h-full text-center text-foreground gap-3">
+                    <div className="hidden md:flex w-full flex-col items-center justify-center h-full text-center text-foreground gap-3">
                         <NotebookPen className="w-10 h-10 text-muted-foreground" />
                         <h2 className="text-lg font-medium">No note selected</h2>
                         <p className="text-sm text-muted-foreground max-w-xs">

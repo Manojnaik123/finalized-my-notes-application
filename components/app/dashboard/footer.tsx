@@ -3,7 +3,7 @@ import { Heart } from 'lucide-react'
 
 const Footer = () => {
     return (
-        <div className="border-t px-4 py-2 flex items-center justify-between text-xs text-muted-foreground">
+        <div className="border-t px-4 py-2 flex items-center justify-center md:justify-between text-xs text-muted-foreground">
             <div className=" hidden md:flex items-center gap-3">
                 <a className="hover:text-foreground transition-colors">Privacy Policy</a>
             </div>

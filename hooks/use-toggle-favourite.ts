@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { NOTES_KEY } from "@/lib/query-keys/query-keyx"
+import { NOTES_KEY, TOAST_POSITION } from "@/lib/query-keys/query-keyx"
 import { Note } from "@/types/main-types/note"
 import { toast } from "sonner"
 
@@ -49,7 +49,7 @@ export function useToggleFavourite(libraryId: number, folderId: number) {
     onError: (err, variables, context) => {
       queryClient.setQueryData([NOTES_KEY, folderId], context?.previousNotes)
       queryClient.setQueryData([NOTES_KEY, 'library', libraryId], context?.previousLibraryNotes) // ✅
-      toast.error("Failed to update favourite")
+      toast.error("Failed to update favourite", { position: TOAST_POSITION })
     },
 
     onSuccess: () => {
