@@ -1,1 +1,1 @@
-export const SHARABLE_NOTE_LINK = 'https://melania-narratable-maximus.ngrok-free.dev/mynotes/dashboard/public/notes/'
+export const SHARABLE_NOTE_LINK = 'https://noteslab.vercel.app/mynotes/dashboard/public/notes/'
