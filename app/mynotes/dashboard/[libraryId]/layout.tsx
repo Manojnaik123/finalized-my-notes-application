@@ -111,14 +111,13 @@ export default function DashboardLayout({
                 }}
               /> */}
 
-              <DropdownMenu>
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="flex items-center gap-2">
                     <img
                       src={user?.imageUrl}
                       className="w-8 h-8 rounded-full"
                     />
-                    {/* <span>{user?.firstName}</span> */}
                   </button>
                 </DropdownMenuTrigger>
 
@@ -130,11 +129,11 @@ export default function DashboardLayout({
                     <DropdownMenuItem>Logout</DropdownMenuItem>
                   </SignOutButton>
                 </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenu> */}
 
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 min-h-0">
+          <div className="flex flex-1 flex-col min-h-0">
             {children}
           </div>
         </SidebarInset>

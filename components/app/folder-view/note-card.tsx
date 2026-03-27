@@ -4,7 +4,7 @@ import { NoteCardProps } from '@/types/props-types/notes-view';
 
 import React from 'react'
 import { Tooltip } from '../others/ToolTip';
-import { Heart, PersonStanding, PersonStandingIcon, Pin, PinOff, Users } from 'lucide-react';
+import { Globe, Heart, PersonStanding, PersonStandingIcon, Pin, PinOff, Users } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -66,14 +66,14 @@ const NoteCard = ({
                         <h1 className='text-base text-foreground pb-2'>{note.title}</h1>
                     </Tooltip>
                     <div className='flex items-center justify-center gap-1'>
-                        {note.is_favourite && (
+                        {/* {note.is_favourite && (
                             <Tooltip isVisible={true} text='Favourite' direction='top' className=''>
                                 <Heart className={`${note?.is_favourite ? "fill-red-500 text-red-500" : ""} h-4`} />
                             </Tooltip>
                         )}
                         <Tooltip isVisible={true} text='this note is sharable' direction='top' className=''>
                             <Users className='h-4' />
-                        </Tooltip>
+                        </Tooltip> */}
                         <Tooltip isVisible={true} text={isPinned ? 'Un pin note' : 'Pin to top'} direction='top' className=''>
                             <Button variant={'ghost'} className='' onClick={() => isPinned ? handleNotePin(false) : handleNotePin(true)}>
                                 {isPinned ? (
@@ -86,16 +86,26 @@ const NoteCard = ({
 
                     </div>
                 </div>
-                <div className='flex gap-2'>
-                    <Badge variant={x}>
-                        Coding
-                    </Badge>
-                    <Badge variant={x}>
-                        Coding
-                    </Badge>
-                    <Badge variant={x}>
-                        Coding
-                    </Badge>
+                <div className="flex gap-2">
+                    {note.is_favourite && (
+                        <Badge
+                            variant="secondary"
+                            className="flex items-center gap-1 rounded-full bg-red-500/10 text-red-400 px-2 py-0.5 text-xs"
+                        >
+                            <Heart className="h-3 w-3 fill-red-400" />
+                            Favourite
+                        </Badge>
+                    )}
+
+                    {note.is_public && (
+                        <Badge
+                            variant="secondary"
+                            className="flex items-center gap-1 rounded-full bg-blue-500/10 text-blue-400 px-2 py-0.5 text-xs"
+                        >
+                            <Globe className="h-3 w-3" />
+                            Shared
+                        </Badge>
+                    )}
                 </div>
                 <p className='text-sm text-foreground/50'>
                     {truncateString(stripHtml(note.content), 150)}

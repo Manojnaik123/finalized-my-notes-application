@@ -10,18 +10,17 @@ import {
 } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 import { Toggle } from "@/components/ui/toggle"
-import { Check, Copy, Earth, Link, Link2, Lock, Share2, Users, WholeWord } from "lucide-react"
+import { Check, Copy, Earth, Globe, GlobeLock, Link, Link2, Lock, Share2, Users, WholeWord } from "lucide-react"
 import { CustomToggle } from "../fields/custom-toggle"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SHARABLE_NOTE_LINK } from "@/lib/internal-urls/sharable-url"
 
 export function PopoverDemo({ onTogglePublic, isPublic, noteId }: { onTogglePublic: () => void, isPublic: boolean, noteId: number }) {
+    const [localIsPublic, setLocalIsPublic] = useState(isPublic)
     const [copied, setCopied] = useState(false)
     const sharableUrl = SHARABLE_NOTE_LINK + noteId
     const pathName = usePathname()
-
-    // const fullUrl = domain + pathName
 
     const handleCopy = async () => {
         try {
@@ -36,6 +35,15 @@ export function PopoverDemo({ onTogglePublic, isPublic, noteId }: { onTogglePubl
         }
     }
 
+    const handleToggle = () => {
+    setLocalIsPublic(prev => !prev) // instant UI update
+    onTogglePublic() // backend update (async)
+}
+
+    useEffect(() => {
+        setLocalIsPublic(isPublic)
+    }, [isPublic])
+
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -46,7 +54,16 @@ export function PopoverDemo({ onTogglePublic, isPublic, noteId }: { onTogglePubl
                     <div className="px-3 py-2 pt-3 flex flex-col gap-2">
                         <h4 className="leading-none font-medium text-lg">Share Note</h4>
                         <p className="text-xs text-muted-foreground flex items-center">
-                            <Lock className="h-3" /> Only you can access this note
+                            {localIsPublic  ? (
+                                <>
+                                    <Globe className="h-4" /> Anyone with the link can view this note
+                                </>
+                            ) : (
+                                <>
+                                    <GlobeLock className="h-4" /> Only you can access this note
+                                </>
+                            )}
+
                         </p>
                     </div>
                     <Separator orientation="horizontal" />
@@ -57,11 +74,11 @@ export function PopoverDemo({ onTogglePublic, isPublic, noteId }: { onTogglePubl
                             <p className="text-md font-">Public access</p>
                         </div>
                         <CustomToggle
-                            checked={isPublic}
-                            onChange={onTogglePublic}
+                            checked={localIsPublic }
+                            onChange={handleToggle}
                         />
                     </div>
-                    {isPublic && (
+                    {localIsPublic  && (
                         <>
                             <Separator orientation="horizontal" />
                             <div className="px-3 py-2 pb-3 flex flex-col gap-2">

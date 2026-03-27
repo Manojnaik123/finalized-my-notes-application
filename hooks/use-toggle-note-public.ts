@@ -40,7 +40,7 @@ export function useToggleNotePublic(folderId: number) {
 
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [NOTES_KEY, folderId] });
-            toast.success("Note visibility updated", { position: TOAST_POSITION });
+            // toast.success("Note visibility updated", { position: TOAST_POSITION });
         },
     });
 

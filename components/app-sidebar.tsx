@@ -17,6 +17,8 @@ import {
   SidebarMenu,
 } from "@/components/ui/sidebar"
 import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, FrameIcon, PieChartIcon, MapIcon, Settings2, Settings, SettingsIcon } from "lucide-react"
+import Link from "next/link"
+import { useParams } from "next/navigation"
 
 
 const user = {
@@ -183,6 +185,9 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const { libraryId } = useParams()
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -192,14 +197,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavFolders />
         <NavFavourites />
       </SidebarContent>
-      <SidebarMenu className="mt-auto px-2">
-        <SidebarMenuItem>
-          <SidebarMenuButton>
-            <SettingsIcon />
-            Settings
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      </SidebarMenu>
+      {/* <SidebarMenu className="mt-auto px-2">
+        <Link href={`/mynotes/dashboard/${libraryId}/settings`}>
+          <SidebarMenuItem>
+            <SidebarMenuButton>
+              <SettingsIcon />
+              Settings
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </Link>
+      </SidebarMenu> */}
       <SidebarFooter>
         <NavUser user={user} />
       </SidebarFooter>
