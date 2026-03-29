@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { Favourites, favourites, getNotes } from "@/delete-later/data"
+
 import { useNotesByLibrary } from "@/hooks/use-fav-notes"
 import { useFolders } from "@/hooks/use-folders"
 import { useLibraries } from "@/hooks/use-libraries"
@@ -33,16 +33,16 @@ import { SIDEBAR_FAV_LISTLEN_AT_BEG } from "@/lib/text-formaters/text-lengths"
 
 export function NavFavourites() {
   const { isMobile } = useSidebar()
-  const [showAll, setShowAll] = useState(false)  
+  const [showAll, setShowAll] = useState(false)
 
-  const { libraryId, folderId } = useParams()
+  const { libraryId, folderId, noteId } = useParams()
   const numericLibraryId = Number(libraryId)
 
   const { data: allNotes = [], isLoading } = useNotesByLibrary(numericLibraryId)
 
   const visibleNotesAtBeg = SIDEBAR_FAV_LISTLEN_AT_BEG
 
-  const visibleNotes = showAll ? allNotes : allNotes.slice(0, visibleNotesAtBeg)  
+  const visibleNotes = showAll ? allNotes : allNotes.slice(0, visibleNotesAtBeg)
 
   if (isLoading) return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -66,8 +66,11 @@ export function NavFavourites() {
       <SidebarMenu>
         {visibleNotes.map((note) => (
           <SidebarMenuItem key={note.title}>
-            <SidebarMenuButton asChild>
-              <Link href={`/mynotes/dashboard/${note.folder_id}/${note.id}`}>
+            <SidebarMenuButton
+              asChild
+              isActive={Number(noteId) === note.id}
+            >
+              <Link href={`/mynotes/dashboard/${libraryId}/${note.folder_id}/${note.id}`}>
                 <span>{note.title}</span>
               </Link>
             </SidebarMenuButton>

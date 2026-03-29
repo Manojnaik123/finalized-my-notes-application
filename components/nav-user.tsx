@@ -25,15 +25,7 @@ import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellI
 import Link from "next/link"
 import { useParams } from "next/navigation"
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar()
 
   const { user: curUser } = useUser()
@@ -74,34 +66,48 @@ export function NavUser({
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{curUser?.fullName}</span>
-                  <span className="truncate text-xs">{curUser?.emailAddresses[0].emailAddress}</span>
+                  <span className="truncate text-xs text-muted-foreground">{curUser?.emailAddresses[0].emailAddress}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
-            {/* <DropdownMenuSeparator /> */}
-            {/* <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <SparklesIcon
-                />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={`/mynotes/dashboard/${libraryId}/settings`}>
-                <DropdownMenuItem>
-                  <Settings
-                  />
+              <DropdownMenuItem asChild>
+                <Link
+                  href={`/mynotes/dashboard/${libraryId}/settings`}
+                  className="
+                      flex items-center gap-2 w-full
+
+                      data-[highlighted]:bg-foreground/5
+                      data-[highlighted]:text-foreground
+
+                      [&_svg]:stroke-current
+                      [&_svg]:text-current
+                      [&_svg]:opacity-100
+                    "
+                >
+                  <Settings />
                   Account Settings
-                </DropdownMenuItem>
-              </Link>
+                </Link>
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <SignOutButton>
-              <DropdownMenuItem>
-                <LogOutIcon
-                />
-                Log out
+              <DropdownMenuItem asChild>
+                <div
+                  className="
+                      flex items-center gap-2 w-full
+
+                      data-[highlighted]:bg-foreground/5
+                      data-[highlighted]:text-foreground
+
+                      [&_svg]:stroke-current
+                      [&_svg]:text-current
+                    "
+                >
+                  <LogOutIcon />
+                  Log out
+                </div>
               </DropdownMenuItem>
             </SignOutButton>
           </DropdownMenuContent>
@@ -110,24 +116,3 @@ export function NavUser({
     </SidebarMenu>
   )
 }
-
-
-{/* <DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <button className="flex items-center gap-2">
-      <img
-        src={user?.imageUrl}
-        className="w-8 h-8 rounded-full"
-      />
-    </button>
-  </DropdownMenuTrigger>
-
-  <DropdownMenuContent align="end">
-    <DropdownMenuItem>Profile</DropdownMenuItem>
-    <DropdownMenuItem>Settings</DropdownMenuItem>
-
-    <SignOutButton>
-      <DropdownMenuItem>Logout</DropdownMenuItem>
-    </SignOutButton>
-  </DropdownMenuContent>
-</DropdownMenu> */}

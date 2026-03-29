@@ -49,17 +49,9 @@ import { toast } from "sonner"
 import { TOAST_POSITION } from "@/lib/query-keys/query-keyx"
 import { useUpdateLibraryDefault } from "@/hooks/use-update-library-default"
 
-export function TeamSwitcher({
-  teams,
-}: {
-  teams: {
-    name: string
-    logo: React.ReactNode
-    plan: string
-  }[]
-}) {
+export function TeamSwitcher() {
   const { isMobile } = useSidebar()
-  const [activeTeam, setActiveTeam] = React.useState(teams[0])
+  // const [activeTeam, setActiveTeam] = React.useState(teams[0])
   const [addLibraryDialogOpen, setAddLibraryDialogOpen] = React.useState<boolean>(false)
   const [deleteLibraryDialogOpen, setDeleteLibraryDialogOpen] = React.useState<boolean>(false)
   const [selectedLibraryId, setSelectedLibraryId] = React.useState<number>(0)
@@ -123,7 +115,6 @@ export function TeamSwitcher({
   return (
     <>
       <AlertDialogForDeletion handleDeletion={handleLibraryDeletion} itemName={selectedLibrary?.name!} itemType="library" open={deleteLibraryDialogOpen} setOpen={setDeleteLibraryDialogOpen} />
-      {/* <DeleteConformation libraryId={selectedLibraryId} open={deleteLibraryDialogOpen} setOpen={setDeleteLibraryDialogOpen} /> */}
       <AddLibraryDialog libraryId={selectedLibraryId} open={addLibraryDialogOpen} setOpen={setAddLibraryDialogOpen} />
       <SidebarMenu>
         <SidebarMenuItem>
@@ -135,7 +126,7 @@ export function TeamSwitcher({
                   className=" data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                    {activeTeam.logo}
+                    {/* the library logo goes here */}
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{curLibrary?.name}</span>
@@ -161,20 +152,13 @@ export function TeamSwitcher({
                 </>
               )}
             </DropdownMenuTrigger>
-            <DropdownMenuContent className={`w-72 ${isDark ? 'dark' : ''} `} align="start" side="bottom" sideOffset={4}>
+            <DropdownMenuContent className={`w-72  `} align="start" side="bottom" sideOffset={4}>
               <DropdownMenuGroup>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
 
                 {sortedLibraries && sortedLibraries.map((library) => (
                   <DropdownMenuSub >
-                    <DropdownMenuSubTrigger className="
-                              hover:bg-foreground/5!
-                              hover:text-foreground!
-                              data-highlighted:bg-foreground/5!
-                              data-highlighted:text-foreground!
-                              data-[state=open]:bg-foreground/5!
-                              data-[state=open]:text-foreground!
-                            ">
+                    <DropdownMenuSubTrigger className="">
                       <div className="relative">
                         <div
                           style={{
@@ -205,12 +189,12 @@ export function TeamSwitcher({
                       </div>
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
-                      <DropdownMenuSubContent className={`${isDark && 'dark'}`}
+                      <DropdownMenuSubContent 
                         sideOffset={isMobile ? -100 : 0}  // negative offset pulls it down below the trigger
                         alignOffset={isMobile ? 25 : 10}
                         avoidCollisions={false}>
-                        <DropdownMenuItem onClick={() => handleLibrarySwitchClick(library.id)} className="hover:bg-foreground/5! hover:text-foreground! data-highlighted:bg-foreground/5! data-highlighted:text-foreground!">
-                          <RefreshCcw />
+                        <DropdownMenuItem onClick={() => handleLibrarySwitchClick(library.id)} >
+                          <RefreshCcw  className="text-foreground"/>
                           Switch Library
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleDefaultset(library.id)} className="hover:bg-foreground/5! hover:text-foreground! data-highlighted:bg-foreground/5! data-highlighted:text-foreground!">

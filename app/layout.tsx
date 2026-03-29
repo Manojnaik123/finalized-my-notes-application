@@ -35,16 +35,16 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <body className={`flex min-h-full flex-col antialiased`}>
-            <ThemeProvider
+            {/* <ThemeProvider
             attribute='class'
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange
-          >
+          > */}
             <CustomThemeProvider> {/* ← wrap here */}
               {children}
             </CustomThemeProvider>
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
         </body>
       </html>
     </ClerkProvider>

@@ -64,12 +64,12 @@ const Tiptap = ({ content, noteId, title, triggerSave, folder_id }: TiptapProps)
     return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    if (editor && content) {
-      editor.commands.setContent(content)
-      setIsTyping(content.replace(/<[^>]*>/g, '').length > 0)
-    }
-  }, [content, editor])
+  // useEffect(() => {
+  //   if (editor && content !== editor.getHTML()) {
+  //     editor.commands.setContent(content)
+  //     setIsTyping(content.replace(/<[^>]*>/g, '').length > 0)
+  //   }
+  // }, [content, editor])
 
   const editorState: EditorState = useEditorState({
     editor,

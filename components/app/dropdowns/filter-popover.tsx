@@ -63,7 +63,7 @@ export function FilterPopover({ onApply }: { onApply?: (filters: FilterState) =>
                     Filter
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-72 p-0 bg-neutral-950 border border-neutral-800 rounded-xl">
+            <PopoverContent className="w-72 p-0 bg-card border border rounded-xl">
                 <div className="">
 
                     {/* Status */}
@@ -75,7 +75,7 @@ export function FilterPopover({ onApply }: { onApply?: (filters: FilterState) =>
                                     checked={filters.pinned}
                                     onCheckedChange={(v) => setFilters(f => ({ ...f, pinned: !!v }))}
                                 />
-                                <span className="text-sm text-white flex-1">Pinned</span>
+                                <span className="text-sm text-foreground flex-1">Pinned</span>
                                 {/* <Pin className="h-4 w-4 text-neutral-500" /> */}
                             </label>
                             <label className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-neutral-900 cursor-pointer">
@@ -83,17 +83,17 @@ export function FilterPopover({ onApply }: { onApply?: (filters: FilterState) =>
                                     checked={filters.favourited}
                                     onCheckedChange={(v) => setFilters(f => ({ ...f, favourited: !!v }))}
                                 />
-                                <span className="text-sm text-white flex-1">Favourited</span>
+                                <span className="text-sm text-foreground flex-1">Favourited</span>
                                 {/* <Heart className="h-4 w-4 text-neutral-500" /> */}
                             </label>
                         </div>
                     </div>
 
-                    <div className="border-t border-neutral-800" />
+                    <div className="border-t border" />
 
                     {/* Date */}
                     <div className="px-4 py-2">
-                        <span className="text-xs text-neutral-500 font-medium uppercase tracking-wide">Date</span>
+                        <span className="text-xs text-foreground font-medium uppercase tracking-wide">Date</span>
                         <div className="grid grid-cols-2 gap-1">
                             {([
                                 { value: "today", label: "Today" },
@@ -110,7 +110,7 @@ export function FilterPopover({ onApply }: { onApply?: (filters: FilterState) =>
                                         checked={filters.date.includes(value)}
                                         onCheckedChange={() => toggleDate(value)}
                                     />
-                                    <span className="text-sm text-white">{label}</span>
+                                    <span className="text-sm text-foreground">{label}</span>
                                 </label>
                             ))}
                         </div>
@@ -120,7 +120,7 @@ export function FilterPopover({ onApply }: { onApply?: (filters: FilterState) =>
 
                     {/* Read Time */}
                     <div className="px-4 py-2">
-                        <span className="text-xs text-neutral-500 font-medium uppercase tracking-wide">Read Time</span>
+                        <span className="text-xs text-foreground font-medium uppercase tracking-wide">Read Time</span>
                         <div className="space-y-1">
                             {([
                                 { value: "quick", label: "Quick (< 2 min)" },
@@ -131,7 +131,7 @@ export function FilterPopover({ onApply }: { onApply?: (filters: FilterState) =>
                                         checked={filters.readTime.includes(value)}
                                         onCheckedChange={() => toggleReadTime(value)}
                                     />
-                                    <span className="text-sm text-white">{label}</span>
+                                    <span className="text-sm text-foreground">{label}</span>
                                 </label>
                             ))}
                         </div>

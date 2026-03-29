@@ -20,7 +20,7 @@ const LibraryPage = () => {
     const router = useRouter()
     const { libraryId } = useParams()
 
-    const isOAuthUser = user?.externalAccounts?.length ?? 0 > 0
+    const isOAuthUser = (user?.externalAccounts?.length ?? 0) > 0
 
     const handleAccounDeletion = async () => {
         try {
@@ -29,8 +29,11 @@ const LibraryPage = () => {
         } catch (err) {
             toast("Can't delete the account right after creating it", { position: TOAST_POSITION })
         }
-        // router.push(`/mynotes/dashboard/${libraryId}/user-profile`)
     }
+
+    console.log('pppppppppppppppppppppppp');
+    console.log(user?.imageUrl);
+    
 
     return (
         <>
@@ -41,14 +44,15 @@ const LibraryPage = () => {
                 <span className='text-foreground/50'>PROFILE</span>
                 <div className=' bg-card flex flex-col mb-8 mt-2 '>
                     <div className='flex justify-between items-center p-4  gap-2'>
-                        <div className='relative w-12 h-12 bg-foreground/20 rounded-md border overflow-hidden'>
-                            <Image
-                                src={user?.imageUrl ?? '/default-avatar.png'}
-                                alt={user?.fullName?.[0] ?? 'P'}
-                                fill
-                                className='object-cover'
-                            />
-                        </div>
+                        <div className='w-12 h-12 bg-foreground/20 rounded-md border overflow-hidden'>
+  <Image
+    src={user?.imageUrl ?? '/default-avatar.png'}
+    alt={user?.fullName ?? 'Profile'}
+    width={48}
+    height={48}
+    className='object-cover w-full h-full rounded-md'
+  />
+</div>
                         <div className='flex-1 flex justify-start flex-col '>
                             <h1 className='text-lg'>{user?.fullName}</h1>
                             <p className='text-card-foreground/50'>{user?.emailAddresses[0].emailAddress}</p>
@@ -78,7 +82,6 @@ const LibraryPage = () => {
                         </>
                     )}
                 </div>
-
                 <span className='text-foreground/50'>ACCOUNT CONTROL</span>
                 <div className=' bg-red-400/5 flex flex-col mt-2 '>
                     <div className='flex justify-between items-center p-4 border-b gap-2'>
@@ -104,7 +107,6 @@ const LibraryPage = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
             <Footer />
         </>

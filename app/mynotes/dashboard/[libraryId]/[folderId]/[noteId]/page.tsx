@@ -99,11 +99,13 @@ const NotePage = () => {
         })
     }
 
-    function handleTitleChange(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) {
-        setTitle(e.target.value)
+    function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const newTitle = e.target.value
+        setTitle(newTitle)
+        if (!currentNote) return
         triggerSave({
-            title: e.target.value,
-            content: currentNote?.content ?? '',
+            title: newTitle,
+            content: currentNote.content ?? '',  // use currentNote, not optional chain default
             folder_id: numericFolderID
         })
     }
@@ -176,6 +178,7 @@ const NotePage = () => {
                                     className='flex-1 text-foreground bg-transparent border-none outline-none w-full'
                                     value={title}
                                     onChange={(e) => handleTitleChange(e)}
+                                    disabled={!currentNote}
                                 />
                             </div>
                         </div>

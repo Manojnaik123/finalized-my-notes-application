@@ -78,10 +78,20 @@ export async function PUT(
       return NextResponse.json({ data: null, error: "Unauthorized" }, { status: 403 })
     }
 
-    // Update only the library name
-    const updateData = {
-      name: body.name,
+    const updateData: {
+      name?: string
+      color_id?: number
+      updated_at: string
+    } = {
       updated_at: new Date().toISOString()
+    }
+
+    if (body.name !== undefined) {
+      updateData.name = body.name
+    }
+
+    if (body.color_id !== undefined) {
+      updateData.color_id = body.color_id
     }
 
     const { data, error } = await supabase
@@ -113,21 +123,21 @@ export async function PATCH(
   try {
     const { userId: clerkId } = await auth()
     if (!clerkId) return NextResponse.json({ data: null, error: "Unauthorized" }, { status: 401 })
- 
+
     const user = await getUserByClerkId(clerkId)
     if (!user) return NextResponse.json({ data: null, error: "User not found" }, { status: 404 })
- 
+
     const { libraryId } = await context.params
     const body = await req.json()
- 
+
     console.log('Request body:', body) // ✅ DEBUG LOG
     console.log('libraryId:', libraryId) // ✅ DEBUG LOG
- 
+
     // Validate that is_default is provided
     if (body.is_default === undefined) {
       return NextResponse.json({ data: null, error: "is_default field is required" }, { status: 400 })
     }
- 
+
     // Verify library ownership
     const { data: library, error: libError } = await supabase
       .from("libraries")
@@ -135,11 +145,11 @@ export async function PATCH(
       .eq("id", libraryId)
       .eq("user_id", user.id)
       .single()
- 
+
     if (libError || !library) {
       return NextResponse.json({ data: null, error: "Unauthorized" }, { status: 403 })
     }
- 
+
     // If setting as default, unset other libraries as default
     if (body.is_default === true && library.is_default !== true) {
       const { error: unsetError } = await supabase
@@ -147,33 +157,33 @@ export async function PATCH(
         .update({ is_default: false })
         .eq("user_id", user.id)
         .neq("id", libraryId)
- 
+
       if (unsetError) {
         return NextResponse.json({ data: null, error: unsetError.message }, { status: 500 })
       }
     }
- 
+
     // Update only the is_default status
     const updateData = {
       is_default: body.is_default,
       updated_at: new Date().toISOString()
     }
- 
+
     const { data, error } = await supabase
       .from("libraries")
       .update(updateData)
       .eq("id", libraryId)
       .select()
       .single()
- 
+
     if (error) {
       return NextResponse.json({ data: null, error: error.message }, { status: 400 })
     }
- 
+
     return NextResponse.json({ data, error: null }, { status: 200 })
   } catch (err) {
     console.log(err)
- 
+
     return NextResponse.json(
       { data: null, error: "Failed to update library default status" },
       { status: 500 }

@@ -100,37 +100,6 @@ export default function DashboardLayout({
               <button onClick={() => toggleTheme()} className="text-foreground p-4">
                 <SunMoon />
               </button>
-
-              {/* <UserButton
-                appearance={{
-                  elements: {
-                    avatarBox: "w-10 h-10 border-primary",
-                    userButtonPopoverCard: " shadow-lg",
-                    userButtonPopoverActionButton: "hover:bg-muted",
-                  },
-                }}
-              /> */}
-
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-2">
-                    <img
-                      src={user?.imageUrl}
-                      className="w-8 h-8 rounded-full"
-                    />
-                  </button>
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-
-                  <SignOutButton>
-                    <DropdownMenuItem>Logout</DropdownMenuItem>
-                  </SignOutButton>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
-
             </div>
           </header>
           <div className="flex flex-1 flex-col min-h-0">

@@ -36,6 +36,8 @@ export function useAutoSave({ noteId, folderId, delay = 1500, libraryId }: AutoS
     }, [noteId, folderId, queryClient])
 
     const save = useCallback(async (payload: SavePayload) => {
+        if(!noteId || noteId === '0') return 
+        if(isSavingRef.current) return
         if (isSavingRef.current) return
         isSavingRef.current = true
         setSaveStatus("saving")
@@ -48,12 +50,18 @@ export function useAutoSave({ noteId, folderId, delay = 1500, libraryId }: AutoS
                 body: JSON.stringify(payload),
             })
             if (!res.ok) throw new Error("Failed to save")
-            lastSavedRef.current = payload
+            queryClient.setQueryData<Note[]>([NOTES_KEY, folderId], (old) =>
+                old?.map((note) =>
+                    note.id === Number(noteId)
+                        ? { ...note, title: payload.title, content: payload.content }
+                        : note
+                ) ?? []
+            )
+
             setSaveStatus("saved")
-            console.log('reached to revalidate');
-            
             await queryClient.invalidateQueries({ queryKey: [NOTES_KEY, folderId] })
             await queryClient.invalidateQueries({ queryKey: [NOTES_KEY, 'library', libraryId] })
+
             const { data } = await res.json()
             return data
         } catch (err) {
@@ -62,7 +70,7 @@ export function useAutoSave({ noteId, folderId, delay = 1500, libraryId }: AutoS
         } finally {
             isSavingRef.current = false
         }
-    }, [noteId, folderId, queryClient, updateCache])
+    }, [noteId, folderId, queryClient, libraryId])
 
     const triggerSave = useCallback((payload: SavePayload) => {
         setSaveStatus("saving")

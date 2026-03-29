@@ -19,7 +19,7 @@ export default function MynotesLayout({
 
     return (
         <ThemeProvider>
-            <main className={isDark ? 'dark' : ''}>
+            <main className={isDark ? 'dark' : '' }>{/**/}
                 <Toaster />
                 <QueryClientProvider client={queryClient}>
                     <TooltipProvider>
