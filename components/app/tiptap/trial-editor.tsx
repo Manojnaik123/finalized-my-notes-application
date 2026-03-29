@@ -178,7 +178,7 @@ const CommandMenu = ({ editor, onClose }: { editor: Editor; onClose: () => void 
   const groups = Array.from(new Set(filtered.map(c => c.group)))
 
   return (
-    <div className='bg-card border border-border rounded-lg overflow-hidden w-48 z-50'>
+    <div className='bg-card border border-border rounded-lg overflow-hidden w-48 z-[9999]'>
       {/* search */}
       <div className='flex items-center gap-2 px-3 py-2 border-b border-border'>
         <Search size={12} className='text-muted-foreground flex-shrink-0' />
