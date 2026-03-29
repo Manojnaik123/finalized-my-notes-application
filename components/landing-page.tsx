@@ -437,7 +437,7 @@ export default function DigitalAtelier() {
           <a href="#">Features</a>
           <a href="#">Pricing</a>
         </div>
-        <Link href={'/sign-in'} className="da-nav-cta">Get Started</Link>
+        <Link href={'/mynotes/sign-in'} className="da-nav-cta">Get Started</Link>
       </nav>
 
       {/* HERO */}

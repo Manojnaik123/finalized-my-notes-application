@@ -46,11 +46,9 @@ const NotePage = () => {
     const queryClient = useQueryClient()
     const { toggleMiddleSideBar, isToggleDisabled } = useMiddleSideBar()
 
-    // const notes = queryClient.getQueryData<Note[]>([NOTES_KEY, numericFolderID])
-
     const { data: notes } = useQuery<Note[]>({
         queryKey: [NOTES_KEY, numericFolderID],
-        enabled: false, // don't refetch, just subscribe to existing cache
+        enabled: false, 
         staleTime: Infinity,
     })
 
@@ -70,7 +68,6 @@ const NotePage = () => {
                 all changes saved
             </span>
         )
-        // if (saveStatus === 'unsaved') return <span className='text-xs text-muted-foreground flex items-center gap-1'><SaveOff className='h-4' /> unsaved</span>
         if (saveStatus === 'error') return <span className='text-xs text-muted-foreground flex items-center gap-1'><CircleX className='h-4' /> unable to save</span>
         return null
     }
