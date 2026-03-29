@@ -272,7 +272,7 @@ const Tiptap = ({ content, noteId, title, triggerSave, folder_id }: TiptapProps)
     <>
       {editor && showMenu && (
         <BubbleMenu
-          className='z-100'
+          className='z-[9999]'
           editor={editor}
           options={{ placement: 'bottom-start', offset: 8, flip: true }}
         >
