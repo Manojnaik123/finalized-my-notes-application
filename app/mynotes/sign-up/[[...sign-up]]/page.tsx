@@ -88,6 +88,8 @@ export default function SignUpPage() {
                 <Clerk.FieldError className='text-xs text-destructive mt-1' />
               </Clerk.Field>
 
+              <SignUp.Captcha className='self-center' />
+
               <SignUp.Action submit className='w-full'>
                 <Button className='w-full'>Continue</Button>
               </SignUp.Action>

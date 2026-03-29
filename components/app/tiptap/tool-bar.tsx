@@ -159,7 +159,7 @@ const Toolbar = ({ editor, editorState }: { editor: Editor, editorState: EditorS
     <Toggle
       key={i}
       variant="outline"
-      className='border-none h-7 w-7 md:h-8 md:w-8 p-1'   // ✅ smaller on mobile
+      className='border-none h-7 w-7 md:h-8 md:w-8 p-1' 
       pressed={btn.active}
       onPressedChange={btn.action}
     >
@@ -168,13 +168,12 @@ const Toolbar = ({ editor, editorState }: { editor: Editor, editorState: EditorS
   ))
 
   return (
-    // ✅ scrollable wrapper — prevents overflow on mobile
     <div className='overflow-x-auto scrollbar-none max-w-[95vw] md:max-w-none'>
       <div className='flex border gap-0.5 md:gap-1 rounded-md p-1 px-1 md:px-2 text-card-foreground/50 bg-card min-w-max'>
         {renderButtons(formatButtons)}
         <Separator orientation='vertical' className='my-1' />
         <Select onValueChange={handleSelectChange} value={editorState.currentHeading}>
-          <SelectTrigger className="w-20 md:w-auto h-7 md:h-8 text-xs md:text-sm">  {/* ✅ smaller on mobile */}
+          <SelectTrigger className="w-20 md:w-auto h-7 md:h-8 text-xs md:text-sm"> 
             <SelectValue placeholder="Paragraph" />
           </SelectTrigger>
           <SelectContent>

@@ -29,7 +29,6 @@ export default function SignInPage() {
       <div className='min-w-[350px]'>
         <SignIn.Root>
 
-          {/* STEP 1: Email input */}
           <SignIn.Step name='start'>
             <h1 className='text-center pb-4'>[ NotesLab ]</h1>
             <div className='flex flex-col gap-2 bg-card/70 border p-6 items-center rounded-t-md'>
@@ -61,6 +60,10 @@ export default function SignInPage() {
               <SignIn.Action submit className='w-full'>
                 <Button className='w-full'>Continue</Button>
               </SignIn.Action>
+
+              {/* <SignIn.Captcha className='self-center' /> */}
+              <div id="clerk-captcha" />
+
             </div>
             <div className='bg-card p-4 flex justify-center items-center border border-t-0 rounded-b-md'>
               <span className='text-sm text-card-foreground/50'> Don't have an account? <b className='text-card-foreground'><u><Link href={'/mynotes/sign-up'}>Sign up</Link></u></b></span>
