@@ -16,7 +16,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { useTheme } from "@/context/theme-context"
-import { SunMoon } from 'lucide-react'
+import { Moon, Sun, SunMoon } from 'lucide-react'
 import { useParams } from "next/navigation";
 // import { folders, getNotes } from "@/delete-later/data";
 import FolderSidebar from "@/components/app/folder-view/folder-sidebar";
@@ -31,7 +31,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
 
   const { folderId, noteId, libraryId } = useParams();
 
@@ -81,7 +81,12 @@ export default function DashboardLayout({
             </div>
             <div className="ml-auto flex">
               <button onClick={() => toggleTheme()} className="text-foreground p-4">
-                <SunMoon />
+                {/* <SunMoon /> */}
+                {isDark ?(
+                  <Sun/>
+                ): (
+                  <Moon/>
+                )}
               </button>
             </div>
           </header>
