@@ -99,9 +99,6 @@ export function AddFolderDialog({ open, setOpen, folderId }: AddFolderDialogProp
 
   }, [open, folders, folderId])
 
-  console.log(form);
-
-
   return (
     <Dialog open={open} onOpenChange={setOpen} >
       <DialogContent className={`sm:max-w-md text-foreground ${isDark ? 'dark' : ''}`}>

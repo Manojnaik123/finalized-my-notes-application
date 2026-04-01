@@ -31,10 +31,6 @@ const LibraryPage = () => {
         }
     }
 
-    console.log('pppppppppppppppppppppppp');
-    console.log(user?.imageUrl);
-    
-
     return (
         <>
             <AlertDialogForDeletion itemName={`Your account`} itemType='account' open={isDeleteConformationDialogOpen} setOpen={setIsDeleteConformationDialogOpen} handleDeletion={handleAccounDeletion} />

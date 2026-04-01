@@ -10,14 +10,8 @@ export const useDeleteFolder = () => {
     return useMutation({
         mutationFn: async (id: number) => {
             const res = await fetch(`/api/folders/${id}`, { method: "DELETE" })
-            console.log('result------------------------');
-            
-            console.log(res);
-            
             if (!res.ok) {
-                console.log('not okay')
                 const { error } = await res.json() as ApiResponse<null>
-                console.log();
                 throw new Error(error || "Failed to delete Folder")
             }
         },

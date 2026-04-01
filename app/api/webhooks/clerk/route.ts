@@ -529,16 +529,12 @@ async function seedUserData(userId: number) {
     console.error("❌ Seed: Error creating notes:", notesError)
     return
   }
-
-  console.log(`✅ Seed complete for user ${userId}`)
 }
 
 // ─────────────────────────────────────────────
 // Webhook handler
 // ─────────────────────────────────────────────
 export async function POST(req: Request) {
-  console.log('reached the web');
-
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
 
   if (!WEBHOOK_SECRET) {
@@ -568,7 +564,6 @@ export async function POST(req: Request) {
       'svix-signature': svix_signature
     }) as WebhookEvent
   } catch (err) {
-    console.log('Error verifying webhook:', err)
     return new Response('Error occured', { status: 400 })
   }
 

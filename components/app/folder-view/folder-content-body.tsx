@@ -18,8 +18,6 @@ const FolderContentBody = ({ onNoteClick }: {
 
     const { data: notes } = useNotes(numericFolderID)
 
-    // console.log(notes)
-    
     // if (!notes) return (
     //     <div>
     //         <div className='flex items-center gap-2 p-3'>

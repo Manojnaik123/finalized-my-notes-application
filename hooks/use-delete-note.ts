@@ -3,10 +3,6 @@ import { NOTES_KEY } from "@/lib/query-keys/query-keyx"
 import { Note } from "@/types/main-types/note"
 
 const deleteNote = async (noteId: number): Promise<void> => {
-    console.log('from hook ');
-    
-    console.log(noteId);
-    
     const res = await fetch(`/api/notes/${noteId}`, {
         method: "DELETE",
     })

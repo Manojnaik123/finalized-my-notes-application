@@ -52,9 +52,6 @@ export async function PUT(
     const { libraryId } = await context.params
     const body = await req.json()
 
-    console.log('Request body:', body) // ✅ DEBUG LOG
-    console.log('libraryId:', libraryId) // ✅ DEBUG LOG
-
     // Validate that name is provided
     if (body.name === undefined) {
       return NextResponse.json({ data: null, error: "Library name is required" }, { status: 400 })
@@ -107,8 +104,6 @@ export async function PUT(
 
     return NextResponse.json({ data, error: null }, { status: 200 })
   } catch (err) {
-    console.log(err)
-
     return NextResponse.json(
       { data: null, error: "Failed to update library" },
       { status: 500 }
@@ -129,9 +124,6 @@ export async function PATCH(
 
     const { libraryId } = await context.params
     const body = await req.json()
-
-    console.log('Request body:', body) // ✅ DEBUG LOG
-    console.log('libraryId:', libraryId) // ✅ DEBUG LOG
 
     // Validate that is_default is provided
     if (body.is_default === undefined) {
@@ -182,8 +174,6 @@ export async function PATCH(
 
     return NextResponse.json({ data, error: null }, { status: 200 })
   } catch (err) {
-    console.log(err)
-
     return NextResponse.json(
       { data: null, error: "Failed to update library default status" },
       { status: 500 }

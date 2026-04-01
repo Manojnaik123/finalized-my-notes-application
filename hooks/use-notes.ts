@@ -10,9 +10,6 @@ export const fetchNotes = async (folderId: number): Promise<Note[]> => {
   if (!res.ok) throw new Error("Failed to fetch")
   const { data, error } = await res.json() as ApiResponse<Note[]>
   if (error) throw new Error(error)
-    console.log('error' + error);
-    console.log('data' + data);
-    
   return data ?? []
 }
 

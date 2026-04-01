@@ -22,10 +22,6 @@ import { Heart, NotebookPen, Plus } from "lucide-react";
 import { useState } from "react";
 
 export default function Page() {
-
-  console.log('manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj manoj nmanoj manoj ');
-  
-
   const [selectedNoteId, setselectedNoteId] = useState<number>(0);
 
   function handleNoteSelected(noteId: number) {

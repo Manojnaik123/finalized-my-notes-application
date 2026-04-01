@@ -21,11 +21,6 @@ export const useLibraries = () => {
 export const useDefaultLibrary = () => {
   const { data: libraries, isLoading, ...rest } = useLibraries()
 
-  console.log('from hook');
-  
-  console.log(libraries);
-  
-
   // Only find default library when libraries are loaded
   const defaultLibrary = libraries && libraries.length > 0 
     ? libraries.find((lib) => lib.is_default === true)

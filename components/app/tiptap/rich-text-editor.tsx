@@ -41,9 +41,6 @@ const RichTextEditor = () => {
                 placeholder: 'Start typing...'
             }),
         ],
-        onUpdate: ({ editor }) => {
-            console.log(editor.getHTML());
-        },
         content: '',
         immediatelyRender: false,
     })

@@ -25,29 +25,12 @@ import { MiddeSideBarProvider } from "@/context/middle-sidebar-context"
 import Link from "next/link";
 import { useFolders } from "@/hooks/use-folders";
 import { useNotes } from "@/hooks/use-notes";
-import { ClerkProvider, SignInButton, SignOutButton, SignUpButton, UserButton } from '@clerk/nextjs'
-import { useAuth } from "@clerk/nextjs";
-import { useUser } from "@clerk/nextjs";
-import { DropdownMenu } from "@/components/ui/dropdown-menu";
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-
-  // remove this 
-  // const { user } = useAuth();
-
-  const { user } = useUser()
-
-  console.log(' this is from the layout ');
-  console.log(user?.id);
-  console.log(user?.emailAddresses[0].emailAddress);
-  console.log(user?.imageUrl);
-
-
   const { toggleTheme } = useTheme();
 
   const { folderId, noteId, libraryId } = useParams();
