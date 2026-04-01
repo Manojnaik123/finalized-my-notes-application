@@ -8,6 +8,10 @@ import { getUserByClerkId } from "@/lib/data-base/users";
 
 export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<Library[]>>> {
   try {
+
+    console.log('reached hte get/libraries');
+
+
     const { userId: clerkId } = await auth()
 
     if (!clerkId) return NextResponse.json({ data: null, error: "Unauthorized" }, { status: 401 })
@@ -22,12 +26,14 @@ export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<Li
       .eq("user_id", user.id)
       .order("created_at", { ascending: true })
 
+    console.log(error?.message);
+
     if (error) return NextResponse.json({ data: null, error: error.message }, { status: 500 })
 
     return NextResponse.json({ data, error: null }, { status: 200 })
 
   } catch (err) {
-    return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json({ data: null, error: err.message }, { status: 500 })
   }
 }
 
