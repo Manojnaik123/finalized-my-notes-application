@@ -33,7 +33,8 @@ export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse<Li
     return NextResponse.json({ data, error: null }, { status: 200 })
 
   } catch (err) {
-    return NextResponse.json({ data: null, error: err.message }, { status: 500 })
+    const error = err as Error
+    return NextResponse.json({ data: null, error: error.message }, { status: 500 })
   }
 }
 
